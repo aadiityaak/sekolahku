@@ -154,10 +154,12 @@ if( $loop->have_posts() ) {
         $doc_id = get_post_meta( get_the_ID(), 'document_id', true );
         $doc_url = wp_get_attachment_url( $doc_id );
         $doc_name = basename ( get_attached_file( $doc_id ) );
+        $title = get_the_title();
+        $title = str_replace('Private: ', '', $title);
         ?>
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title"><?php echo get_the_title(); ?></h5>
+                <h5 class="card-title"><?php echo $title; ?></h5>
                 <?php
                 if( ! empty( $doc_id ) ) {
                     ?>
@@ -201,7 +203,7 @@ if( $loop->have_posts() ) {
             </div>
             <div class="mb-3">
                 <label for="formFile" class="form-label">Default file input example</label>
-                <input name="file-pdf" class="form-control" type="file" id="formFile" accept="application/pdf" required>
+                <input name="file-pdf" class="form-control w-75" type="file" id="formFile" accept="application/pdf" required>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
