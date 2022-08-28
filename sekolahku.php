@@ -37,7 +37,12 @@ $incs = array(
 	'inc/function.php',
     'inc/post-type.php',
     'inc/profile-tab.php',
+	'inc/posts-column.php',
+
+	'siswa/siswa.php'
 );
 foreach ( $incs as $inc ) {
 	require_once plugin_dir_path( __FILE__ ) . $inc;
 }
+
+register_activation_hook( __FILE__, 'sekolahku_activate' );
