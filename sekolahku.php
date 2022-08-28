@@ -33,11 +33,14 @@ define( 'SEKOLAHKU_VERSION', '1.5.0' );
  */
 define( 'SEKOLAHKU_URL', plugin_dir_url( __FILE__ ) );
 
-$incs = array(
+$files = array(
 	'inc/function.php',
-    'inc/post-type.php',
-    'inc/profile-tab.php',
+
+    'admin/dokumen/post-type.php',
+	'admin/dokumen/dokumen.php',
+
+    'public/dokumen/profile-tab.php',
 );
-foreach ( $incs as $inc ) {
-	require_once plugin_dir_path( __FILE__ ) . $inc;
+foreach ( $files as $file ) {
+	require_once plugin_dir_path( __FILE__ ) . $file;
 }

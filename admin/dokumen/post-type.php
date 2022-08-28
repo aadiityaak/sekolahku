@@ -34,7 +34,7 @@ function register_custom_post_type_document() {
             'supports' => array( 'title'),
             'menu_icon' => 'dashicons-media-document',
             'capability_type' => 'post',
-            'show_in_rest' => true,
+            'show_in_rest' => false,
             'rest_base' => 'document',
         )
     );
