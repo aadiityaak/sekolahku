@@ -12,7 +12,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class My_Example_List_Table extends WP_List_Table {
+class Table_Siswa extends WP_List_Table {
 
     private $wpdb;
 
@@ -83,7 +83,8 @@ class My_Example_List_Table extends WP_List_Table {
         // echo '</pre>';
 
         $this->_column_headers = array( $columns, $hidden, $sortable );
-        $this->items = $result ? $result : [];
+        $this->items = $result;
+
     }
 
 } //class
@@ -95,18 +96,23 @@ function siswa_menu_items(){
 add_action( 'admin_menu', 'siswa_menu_items' );
 
 function siswa_render(){
-    $myListTable = new My_Example_List_Table();
+    global $wpdb;
+    $myListTable = new Table_Siswa();
+    $table_siswa = $wpdb->prefix . 'siswa';
+    $table_siswa_meta = $wpdb->prefix . 'siswa_meta';
+
     echo '<div class="wrap"><h2>Data Siswa</h2>'; 
 
     ?>
     <form action="?page=data_siswa" method="post" enctype="multipart/form-data">
         Import data
         <input type="file" name="siswacsv" id="siswacsv">
+        <input type="hidden" name="datasiswa" id="datasiswa">
         <input type="submit" value="Upload Image" name="submit">
     </form>
     <?php
-    if ($_FILES['siswacsv']['error'] == 0){
-        print_r($_FILES);
+    if (isset($_POST['datasiswa']) &&$_FILES['siswacsv']['error'] == 0){
+        // print_r($_FILES);
         // Allowed mime types
         $fileMimes = array(
             'text/x-comma-separated-values',
@@ -135,31 +141,42 @@ function siswa_render(){
     
                 // Parse data from CSV file line by line
                 // Parse data from CSV file line by line
+                // $importsiswa =[];
                 while (($getData = fgetcsv($csvFile, 10000, ",")) !== FALSE) {
-                //     // Get row data
-                //     $name = $getData[0];
-                //     $email = $getData[1];
-                //     $phone = $getData[2];
-                //     $status = $getData[3];
-    
-                //     // If user already exists in the database with the same email
-                //     $query = "SELECT id FROM users WHERE email = '" . $getData[1] . "'";
-    
-                //     $check = mysqli_query($conn, $query);
-    
-                //     if ($check->num_rows > 0)
-                //     {
-                //         mysqli_query($conn, "UPDATE users SET name = '" . $name . "', phone = '" . $phone . "', status = '" . $status . "', created_at = NOW() WHERE email = '" . $email . "'");
-                //     }
-                //     else
-                //     {
-                //         mysqli_query($conn, "INSERT INTO users (name, email, phone, created_at, updated_at, status) VALUES ('" . $name . "', '" . $email . "', '" . $phone . "', NOW(), NOW(), '" . $status . "')");
-    
-                //     }
+                    // $importsiswa[] = $getData;
+                    
+                    $result_check = $wpdb->insert($table_siswa, array(
+                        'nis' => $getData[0],
+                        'nisn' => $getData[1],
+                        'nama_lengkap' => $getData[2], // ... and so on
+                    ));
+                    if($result_check){
+                        $wpdb->insert($table_siswa_meta, array(
+                            'nis' => $getData[0],
+                            'meta_key' => 'ayah',
+                            'meta_value' => $getData[3],
+                        ));
+                        $wpdb->insert($table_siswa_meta, array(
+                            'nis' => $getData[0],
+                            'meta_key' => 'ibu',
+                            'meta_value' => $getData[4],
+                        ));
+                        $wpdb->insert($table_siswa_meta, array(
+                            'nis' => $getData[0],
+                            'meta_key' => 'wali',
+                            'meta_value' => $getData[5],
+                        ));
+                        echo '<div class="notice notice-success is-dismissible">Import NIS '.$getData[0].' Berhasil!</div>';
+                     } else {
+                        echo '<div class="notice notice-error is-dismissible">Import NIS '.$getData[0].' Gagal!</div>';
+                     }
                 }
-    
                 // Close opened CSV file
                 fclose($csvFile);
+                echo $pesan;
+                // echo '<pre>';
+                // print_r($importsiswa);
+                // echo '</pre>';
                 
         } else {
             echo "Please select valid file";

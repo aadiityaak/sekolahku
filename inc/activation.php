@@ -18,7 +18,8 @@ $sql = "CREATE TABLE $table_name (
   nisn tinytext NOT NULL,
   nis tinytext NOT NULL,
   nama_lengkap text NOT NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  UNIQUE KEY nis (nis)
 ) $charset_collate;";
 
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
