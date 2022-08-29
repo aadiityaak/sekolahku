@@ -35,9 +35,17 @@ define( 'SEKOLAHKU_URL', plugin_dir_url( __FILE__ ) );
 
 $files = array(
 	'inc/function.php',
-    'inc/post-type.php',
-    'inc/profile-tab.php',
+	'inc/posts-column.php',
+    
+	'admin/document/document.php',
+	'admin/document/post-type.php',
+
+    
+
+
+
+	'admin/siswa/siswa.php'
 );
-foreach ( $incs as $inc ) {
+foreach ( $files as $inc ) {
 	require_once plugin_dir_path( __FILE__ ) . $inc;
 }
