@@ -34,7 +34,6 @@ define( 'SEKOLAHKU_VERSION', '1.5.0' );
 define( 'SEKOLAHKU_URL', plugin_dir_url( __FILE__ ) );
 
 $files = array(
-	'inc/function.php',
 	'inc/posts-column.php',
     
 	'admin/document/document.php',
@@ -49,3 +48,8 @@ $files = array(
 foreach ( $files as $inc ) {
 	require_once plugin_dir_path( __FILE__ ) . $inc;
 }
+
+function sekolahku_plugin_activation(){
+	include('inc/activation.php');
+  }
+  register_activation_hook( __FILE__, 'sekolahku_plugin_activation' );
