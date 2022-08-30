@@ -69,11 +69,12 @@ class Table_Siswa extends WP_List_Table {
         if ( isset($_POST['nis']) && 'delete' === $this->current_action() ) {
             $table_siswa = $this->wpdb->prefix . 'siswa';
             $table_siswa_meta = $this->wpdb->prefix . 'siswa_meta';
-            $ids = implode( ', ', $_POST['nis'] );
+            $ids = implode( ',', $_POST['nis'] );
+            $ids_view = implode( ', ', $_POST['nis'] );
 
             $this->wpdb->query( "DELETE FROM $table_siswa WHERE nis IN($ids)" );
             $this->wpdb->query( "DELETE FROM $table_siswa_meta WHERE nis IN($ids)" );
-            echo '<div class="notice notice-error is-dismissible"><p>Data dengan NIS <b>'.$ids.'</b> Berhasil Dihapus!</p></div>';
+            echo '<div class="notice notice-error is-dismissible"><p>Data dengan NIS <b>'.$ids_view.'</b> Berhasil Dihapus!</p></div>';
             
         }
     }

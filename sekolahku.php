@@ -41,6 +41,7 @@ $files = array(
 	'admin/document/post-type.php',
 
 	'admin/siswa/Table_Siswa.php',
+	'admin/siswa/import.php',
 	'admin/siswa/siswa.php'
 
 );
