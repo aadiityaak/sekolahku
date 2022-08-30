@@ -43,8 +43,50 @@ class Table_Siswa extends WP_List_Table {
         }
     }
 
+    /**
+     * Define our bulk actions
+     * 
+     * @since 1.2
+     * @returns array() $actions Bulk actions
+     */
+    function get_bulk_actions() {
+        $actions = array(
+            'delete' => __( 'Delete' , 'visual-form-builder')
+        );
+        return $actions;
+    }
+
+    /**
+     * Process our bulk actions
+     * 
+     * @since 1.2
+     */
+    function process_bulk_action() {     
+        // print_r($_POST);   
+        // echo '<br>--</br>';
+        // print_r($_REQUEST);
+
+        if ( isset($_POST['nis']) && 'delete' === $this->current_action() ) {
+            $table_siswa = $this->wpdb->prefix . 'siswa';
+            $table_siswa_meta = $this->wpdb->prefix . 'siswa_meta';
+            $ids = implode( ',', $_POST['nis'] );
+
+            $this->wpdb->query( "DELETE FROM $table_siswa WHERE nis IN($ids)" );
+            $this->wpdb->query( "DELETE FROM $table_siswa_meta WHERE nis IN($ids)" );
+            echo '<div class="notice notice-error is-dismissible">Data dengan NIS <b>'.$ids.'</b> Berhasil Dihapus!</div>';
+            
+        }
+    }
+
+    // Displaying checkboxes!
+    function column_cb($item) {
+        // print_r($item);
+        return sprintf('<input type="checkbox" name="nis[]" value="%s"/>',$item->nis );
+    }
+    
     function get_columns(){
         $columns = array(
+            'cb' => '<input type="checkbox" />',
             'nis' => __( 'NIS', 'sekolahku' ),
             'nisn'    => __( 'NISN', 'sekolahku' ),
             'nama_lengkap'      => __( 'Nama Lengkap', 'sekolahku' ),
@@ -60,6 +102,8 @@ class Table_Siswa extends WP_List_Table {
         $columns  = $this->get_columns();
         $hidden   = array();
         $sortable = array();
+
+        $this->process_bulk_action();
 
         $table_siswa = $this->wpdb->prefix . 'siswa';
         $table_siswa_meta = $this->wpdb->prefix . 'siswa_meta';
@@ -78,9 +122,6 @@ class Table_Siswa extends WP_List_Table {
             LEFT JOIN $table_siswa_meta ON $table_siswa.nis = $table_siswa_meta.nis
 
         " );
-        // echo '<pre>';
-        // print_r($this->wpdb);
-        // echo '</pre>';
 
         $this->_column_headers = array( $columns, $hidden, $sortable );
         $this->items = $result;
@@ -88,7 +129,6 @@ class Table_Siswa extends WP_List_Table {
     }
 
 } //class
-
 
 function siswa_menu_items(){
     add_menu_page( 'Siswa', 'Data Siswa', 'activate_plugins', 'data_siswa', 'siswa_render' );
@@ -181,8 +221,16 @@ function siswa_render(){
         } else {
             echo "Please select valid file";
         }
-    }  
-        $myListTable->prepare_items(); 
-        $myListTable->display(); 
-    echo '</div>'; 
+    }
+    ?>
+    <form id="events-filter" method="post">
+    <input type="hidden" name="page" value="'.$_REQUEST['page'].'" />
+    <?php
+    $myListTable->prepare_items(); 
+    $myListTable->display(); 
+    ?>
+    </form>
+    </div>
+
+    <?php
 }
