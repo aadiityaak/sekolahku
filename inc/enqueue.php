@@ -15,11 +15,11 @@ function sekolahku_admin_style() {
     wp_enqueue_script( 'custom-script', SEKOLAHKU_URL. 'asset/js/script.js', array( 'jquery' ) );
 
     wp_localize_script( 
-        'ajax-script', 
-        'my_ajax_object', 
+        'custom-script', 
+        'obj', 
         [
             'ajax_url' => admin_url( 'admin-ajax.php' ) 
-            ] 
+        ] 
     );
 }
 add_action('admin_enqueue_scripts', 'sekolahku_admin_style');
