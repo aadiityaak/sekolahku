@@ -50,23 +50,19 @@ Describe your project
 
 ## :sparkles: Features ##
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+:heavy_check_mark: Mengelola database siswa;\
+:heavy_check_mark: Mengelola database dokumen guru ;\
+:heavy_check_mark: Mengelola keuangan sekolah;
 
 ## :rocket: Technologies ##
 
 The following tools were used in this project:
 
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+- [PHP](https://www.php.net/)
 
 ## :white_check_mark: Requirements ##
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+- [Ultimate Member](https://wordpress.org/plugins/ultimate-member/)
 
 ## :checkered_flag: Starting ##
 
@@ -91,7 +87,7 @@ $ yarn start
 This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
 
 
-Made with :heart: by <a href="https://github.com/aadiityaak" target="_blank">{{YOUR_NAME}}</a>
+Made with :heart: by <a href="https://github.com/aadiityaak" target="_blank">aadiityaak</a>
 
 &#xa0;
 
