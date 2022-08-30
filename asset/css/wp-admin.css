@@ -1,0 +1,10 @@
+.import-csv .file input {
+    display: none;
+}
+.import-csv .file {
+    border: 1px solid #ddd;
+    padding: 10px;
+    display: block;
+    margin-top: 20px;
+    border-radius: 5px;
+}

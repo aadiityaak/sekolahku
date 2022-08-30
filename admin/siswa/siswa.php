@@ -21,11 +21,16 @@ function sekolahku_import_data(){
     $table_siswa_meta = $wpdb->prefix . 'siswa_meta';
 
     ?>
-    <form action="?page=data_siswa" method="post" enctype="multipart/form-data">
-        Import data
-        <input type="file" name="siswacsv" id="siswacsv">
+    <form class="import-csv wp-upload-form" action="?page=data_siswa" method="post" enctype="multipart/form-data">
+        <label class="file">
+            <input type="file" id="file" name="siswacsv" aria-label="File browser example">
+            <span class="file-pesan">Cari File..</span>
+        </label>
         <input type="hidden" name="datasiswa" id="datasiswa">
-        <input type="submit" value="Upload Image" name="submit">
+        <br>
+        <button type="submit" name="submit" class="button button-primary">
+            Submit
+        </button>
     </form>
     <?php
     if (isset($_POST['datasiswa']) &&$_FILES['siswacsv']['error'] == 0){
@@ -103,10 +108,17 @@ function sekolahku_import_data(){
 // Render admin page
 function sekolahku_siswa_render(){
     $myListTable = new Table_Siswa();
+    add_thickbox();
     ?>
     <div class="wrap">
-        <h2>Data Siswa <a href="admin.php?page=data_siswa&action=new">Add New</a></h2>
-
+        <h2>Data Siswa</h2>
+        <div class="alignright">
+            <a href="#" class="button button-primary">Tambah Data</a>
+            <a href="#TB_inline?width=600&height=150&inlineId=import-window" title="Import data dari csv" class="thickbox button button-primary">Import Data</a>
+        </div>
+        <div id="import-window" style="display:none;">
+            <?php sekolahku_import_data(); ?>
+        </div>
         <form id="events-filter" method="post">
         <input type="hidden" name="page" value="'.$_REQUEST['page'].'" />
         <?php

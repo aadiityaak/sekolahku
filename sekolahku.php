@@ -35,6 +35,7 @@ define( 'SEKOLAHKU_URL', plugin_dir_url( __FILE__ ) );
 
 $files = array(
 	'inc/posts-column.php',
+	'inc/enqueue.php',
     
 	'admin/document/document.php',
 	'admin/document/post-type.php',
