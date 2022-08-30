@@ -13,6 +13,14 @@ function sekolahku_admin_style() {
 
     wp_enqueue_script( 'jquery' );
     wp_enqueue_script( 'custom-script', SEKOLAHKU_URL. 'asset/js/script.js', array( 'jquery' ) );
+
+    wp_localize_script( 
+        'ajax-script', 
+        'my_ajax_object', 
+        [
+            'ajax_url' => admin_url( 'admin-ajax.php' ) 
+            ] 
+    );
 }
 add_action('admin_enqueue_scripts', 'sekolahku_admin_style');
 add_action('login_enqueue_scripts', 'sekolahku_admin_style');
