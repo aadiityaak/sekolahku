@@ -31,13 +31,14 @@ class Table_Siswa extends WP_List_Table {
         switch( $column_name ) { 
             case 'id':
             case 'nis':
+                return $item->$column_name;
             case 'nisn':
             case 'nama_lengkap':
             case 'alamat':
             case 'ayah':
             case 'ibu':
             case 'wali':
-                return $item->$column_name;
+                return '<input class="no-border data-change" data-nis="'.$item->nis.'" name="'.$column_name.'" value="'.$item->$column_name.'" />';
             default:
                 return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
         }

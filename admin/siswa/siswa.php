@@ -28,7 +28,7 @@ function sekolahku_siswa_render(){
         <div id="import-window" style="display:none;">
             <?php sekolahku_import_data(); ?>
         </div>
-        <form id="events-filter" method="post">
+        <form id="data-siswa" method="post">
         <input type="hidden" name="page" value="'.$_REQUEST['page'].'" />
         <?php
             $myListTable->prepare_items(); 
