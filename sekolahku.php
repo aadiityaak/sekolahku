@@ -39,11 +39,9 @@ $files = array(
 	'admin/document/document.php',
 	'admin/document/post-type.php',
 
-    
-
-
-
+	'admin/siswa/Table_Siswa.php',
 	'admin/siswa/siswa.php'
+
 );
 foreach ( $files as $inc ) {
 	require_once plugin_dir_path( __FILE__ ) . $inc;
