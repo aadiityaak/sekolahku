@@ -15,10 +15,12 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 class Table_Siswa extends WP_List_Table {
 
     private $wpdb;
+    private $siswametas;
 
     function __construct(){
-        global $status, $page, $wpdb;
+        global $status, $page, $wpdb, $siswametas;
         $this->wpdb = $wpdb;
+        $this->siswametas = $siswametas;
 
         parent::__construct( array(
             'singular'  => __( 'siswa', 'sekolahku' ),     //singular name of the listed records
@@ -38,6 +40,13 @@ class Table_Siswa extends WP_List_Table {
             case 'ayah':
             case 'ibu':
             case 'wali':
+            case 'kelas':
+            case 'hp':
+            case 'jenjang_sosial':
+            case 'saudara_kandung':
+            case 'orangtua_asuh':
+            case 'alamat_orangtua_asuh':
+            case 'hp_orangtua_asuh':
                 return '<input class="no-border data-change" data-nis="'.$item->nis.'" data-key="'.$column_name.'" value="'.$item->$column_name.'" />';
             default:
                 return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
@@ -87,17 +96,16 @@ class Table_Siswa extends WP_List_Table {
     }
     
     function get_columns(){
+        
         $columns = array(
             'cb' => '<input type="checkbox" />',
             'nis' => __( 'NIS', 'sekolahku' ),
             'nisn'    => __( 'NISN', 'sekolahku' ),
             'nama_lengkap'      => __( 'Nama Lengkap', 'sekolahku' ),
-            'alamat' => __( 'Alamat', 'sekolahku' ),
-            'ayah' => __( 'Ayah', 'sekolahku' ),
-            'ibu' => __( 'Ibu', 'sekolahku' ),
-            'wali' => __( 'Wali', 'sekolahku' )
+            'hp'      => __( 'HP', 'sekolahku' ),
+            'alamat' => 'Alamat'
         );
-
+        // return array_merge($column,$this->siswametas);
         return $columns;
     }
     function prepare_items() {
@@ -109,20 +117,21 @@ class Table_Siswa extends WP_List_Table {
 
         $table_siswa = $this->wpdb->prefix . 'siswa';
         $table_siswa_meta = $this->wpdb->prefix . 'siswa_meta';
+        $i= 1;
+        $setkey = '';
+        foreach($this->siswametas as $key => $val) {
+            $setkey .= ($i++ == 1) ? '' : ',';
+            $setkey .= "(select meta_value from $table_siswa_meta where nis = $table_siswa.nis and meta_key = '$key' limit 1) as $key";
+        }
         $result = $this->wpdb->get_results ( "
             SELECT DISTINCT 
                 $table_siswa.id,
                 $table_siswa.nisn,
                 $table_siswa.nis,
                 $table_siswa.nama_lengkap,
-                (select meta_value from $table_siswa_meta where nis = $table_siswa.nis and meta_key = 'alamat' limit 1) as alamat,
-                (select meta_value from $table_siswa_meta where nis = $table_siswa.nis and meta_key = 'ayah' limit 1) as ayah,
-                (select meta_value from $table_siswa_meta where nis = $table_siswa.nis and meta_key = 'ibu' limit 1) as ibu,
-                (select meta_value from $table_siswa_meta where nis = $table_siswa.nis and meta_key = 'wali' limit 1) as wali
-                
+                $setkey
             FROM  $table_siswa
             LEFT JOIN $table_siswa_meta ON $table_siswa.nis = $table_siswa_meta.nis
-
         " );
 
         $this->_column_headers = array( $columns, $hidden, $sortable );

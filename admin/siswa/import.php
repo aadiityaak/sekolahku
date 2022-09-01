@@ -9,7 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 function sekolahku_import_data(){
-    global $wpdb;
+    global $wpdb, $siswametas;
     $table_siswa = $wpdb->prefix . 'siswa';
     $table_siswa_meta = $wpdb->prefix . 'siswa_meta';
 
@@ -65,37 +65,27 @@ function sekolahku_import_data(){
                         'nisn' => $getData[1],
                         'nama_lengkap' => $getData[2], // ... and so on
                     ));
+                    
                     if($result_check){
-                        $wpdb->insert($table_siswa_meta, array(
-                            'nis' => $getData[0],
-                            'meta_key' => 'alamat',
-                            'meta_value' => $getData[3],
-                        ));
-                        $wpdb->insert($table_siswa_meta, array(
-                            'nis' => $getData[0],
-                            'meta_key' => 'ayah',
-                            'meta_value' => $getData[4],
-                        ));
-                        $wpdb->insert($table_siswa_meta, array(
-                            'nis' => $getData[0],
-                            'meta_key' => 'ibu',
-                            'meta_value' => $getData[5],
-                        ));
-                        $wpdb->insert($table_siswa_meta, array(
-                            'nis' => $getData[0],
-                            'meta_key' => 'wali',
-                            'meta_value' => $getData[6],
-                        ));
+                        $i = 3;
+                        foreach($siswametas as $key => $val) {
+                            $wpdb->insert($table_siswa_meta, array(
+                                'nis' => $getData[0],
+                                'meta_key' => $key,
+                                'meta_value' => $getData[$i++]
+                            ));
+                        }
+
                         $pesan = '<div class="notice notice-success is-dismissible"><p>Import Berhasil!</p></div>';
-                     } else {
-                        $pesan = '<div class="notice notice-error is-dismissible"><p>Import Gagal!</p></div>';
-                     }
+                    } else {
+                    $pesan = '<div class="notice notice-error is-dismissible"><p>Import Gagal!</p></div>';
+                    }
                 }
                 // Close opened CSV file
                 fclose($csvFile);
                 echo $pesan;
                 // echo '<pre>';
-                // print_r($importsiswa);
+                // print_r($wpdb);
                 // echo '</pre>';
                 
         } else {

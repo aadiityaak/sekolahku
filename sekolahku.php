@@ -33,6 +33,21 @@ define( 'SEKOLAHKU_VERSION', '1.5.0' );
  */
 define( 'SEKOLAHKU_URL', plugin_dir_url( __FILE__ ) );
 
+// Meta siswa
+$siswametas = [
+	'kelas' => 'Kelas',
+	'hp' => 'HP',
+	'alamat' => 'Alamat',
+	'ayah' => 'Nama Ayah',
+	'ibu' => 'Nama Ibu',
+	'wali' => 'Nama Wali',
+	'jenjang_sosial' => 'Jenjang Sosial',
+	'saudara_kandung' => 'Saudara kandung',
+	'orangtua_asuh' => 'Orang Tua Asuh',
+	'alamat_orangtua_asuh' => 'Alamat',
+	'hp_orangtua_asuh' => 'HP'
+];
+
 $files = array(
 	'inc/posts-column.php',
 	'inc/enqueue.php',
