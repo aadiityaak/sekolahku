@@ -94,16 +94,44 @@ class Table_Siswa extends WP_List_Table {
         // print_r($item);
         return sprintf('<input type="checkbox" name="nis[]" value="%s"/>',$item->nis );
     }
+
+    function column_tindakan($item) {
+        ob_start();
+        add_thickbox();
+        ?>
+        <div class="ws-text-right">
+            <a class="button button-primary thickbox" href="#TB_inline?width=600&height=550&inlineId=more<?php echo $item->nis; ?>" title="Data <?php echo $item->nama_lengkap; ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+            </svg>
+            </a>
+            <div id="more<?php echo $item->nis; ?>" style="display:none;">
+                <?php
+                foreach($this->siswametas as $key => $val) {
+                    echo '<div class="ws-mb-1">';
+                    echo '<label for="'.$item->nis.$key.'"><b>'.$val.'</b>1<br>';
+                    echo '<input id="'.$item->nis.$key.'" class="data-change ws-form-control" data-nis="'.$item->nis.'" data-key="'.$key.'" value="'.$item->$key.'" />';
+                    echo '</label>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
+    }
     
     function get_columns(){
         
         $columns = array(
             'cb' => '<input type="checkbox" />',
-            'nis' => __( 'NIS', 'sekolahku' ),
-            'nisn'    => __( 'NISN', 'sekolahku' ),
-            'nama_lengkap'      => __( 'Nama Lengkap', 'sekolahku' ),
-            'hp'      => __( 'HP', 'sekolahku' ),
-            'alamat' => 'Alamat'
+            'nis' => 'NIS',
+            'nisn'    => 'NISN',
+            'nama_lengkap'      => 'Nama Lengkap',
+            'kelas' => 'Kelas',
+            'hp'      => 'HP',
+            'alamat' => 'Alamat',
+            'tindakan' => ''
         );
         // return array_merge($column,$this->siswametas);
         return $columns;

@@ -13,9 +13,7 @@ function update_data_siswa() {
     global $wpdb;
     // generate the response
     $response = [];
-
     // response output
-    header( "Content-Type: application/json" );
     $nis = isset($_POST['nis']) ? $_POST['nis'] : '';
     $key = isset($_POST['key']) ? $_POST['key'] : '';
     $value = isset($_POST['value']) ? $_POST['value'] : '';

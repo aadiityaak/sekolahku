@@ -21,7 +21,22 @@ input.no-border:focus {
     position: relative;
     display: block;
 }
-
+.ws-text-right {
+    text-align: right;
+}
+.ws-form-control {
+    border-radius: 2px;
+    padding: 3px 5px;
+    border: 1px solid #ddd;
+    display: block;
+    width: 100%;
+}
+.ws-mb-1 {
+    margin-bottom: 1em;
+}
+.ws-mb-2 {
+    margin-bottom: 2em;
+}
 .spin {
     position: relative;
     display: block;
