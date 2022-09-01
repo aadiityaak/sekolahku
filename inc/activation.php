@@ -38,4 +38,34 @@ $sql = "CREATE TABLE $table_name (
 require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 dbDelta( $sql );
 
+$table_name = $wpdb->prefix . 'tagihan';
+
+$sql = "CREATE TABLE $table_name (
+  id mediumint(9) NOT NULL AUTO_INCREMENT,
+  id_tagihan tinytext NOT NULL,
+  nis tinytext NOT NULL,
+  tagihan tinytext NOT NULL,
+  nominal text NOT NULL,
+  tempo tinytext NOT NULL,
+  create_at tinytext NOT NULL,
+  PRIMARY KEY  (id)
+) $charset_collate;";
+
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+dbDelta( $sql );
+
+$table_name = $wpdb->prefix . 'pembayaran';
+
+$sql = "CREATE TABLE $table_name (
+  id mediumint(9) NOT NULL AUTO_INCREMENT,
+  nis tinytext NOT NULL,
+  id_tagihan tinytext NOT NULL,
+  nominal text NOT NULL,
+  status tinytext NOT NULL,
+  create_at tinytext NOT NULL,
+  PRIMARY KEY  (id)
+) $charset_collate;";
+
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+dbDelta( $sql );
 
