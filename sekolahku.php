@@ -59,6 +59,7 @@ $files = array(
 
 	'admin/siswa/siswa.php',
 	'admin/siswa/meta-box.php',
+	'admin/siswa/import.php',
 
 	'public/document/profile-tab.php'
 

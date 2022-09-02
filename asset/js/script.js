@@ -1,46 +1,75 @@
-jQuery(function($) {
-    $('input[type="file"]').change(function(e) {
-        var file = e.target.files[0].name;
-        var parent = $(this).parent().find('.file-pesan').html(file);
-    });
+const global = window
 
+global.isFileAPIAvailable = function () {
+  // Check for the various File API support.
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+    // Great success! All the File APIs are supported.
+    return true
+  } else {
+    // source: File API availability - http://caniuse.com/#feat=fileapi
+    // source: <output> availability - http://html5doctor.com/the-output-element/
+    document.writeln('The HTML5 APIs used in this form are only available in the following browsers:<br />')
+    // 6.0 File API & 13.0 <output>
+    document.writeln(' - Google Chrome: 13.0 or later<br />')
+    // 3.6 File API & 6.0 <output>
+    document.writeln(' - Mozilla Firefox: 6.0 or later<br />')
+    // 10.0 File API & 10.0 <output>
+    document.writeln(' - Internet Explorer: Not supported (partial support expected in 10.0)<br />')
+    // ? File API & 5.1 <output>
+    document.writeln(' - Safari: Not supported<br />')
+    // ? File API & 9.2 <output>
+    document.writeln(' - Opera: Not supported')
+    return false
+  }
+}
 
-    $('.data-change').on('change', function () {
-        var $this = $(this);
-        let parent = $this.parent();
-        let data_nis = $this.data('nis');
-        let data_key = $this.data('key');
-        let data_value = $this.val();
-        parent.append(`
-        <span class="spin">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-        </svg>
-        </span>
-        `);
-        let data = {
-            action : 'update_data_siswa',
-            nis: data_nis,
-            key: data_key,
-            value: data_value
-        };
-        jQuery.post(obj.ajax_url, data, function(response) {
-            $this.parent().find('.spin').remove();
-            $this.parent().append(`
-            <span class="pesan-sukses">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
-                <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
-                <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
-            </svg>
-            </span>
-            `);
-            setTimeout(
-                function() 
-                {
-                  $('.pesan-sukses').remove();
-                }, 5000);
-            console.log(response);
-		});
-    });
+// Used to generate the data for the sine wave demo
+// source: http://coding.smashingmagazine.com/2011/10/04/quick-look-math-animations-javascript/
+global.drawSine = function () {
+  let counter = 0
+  // 100 iterations
+  const increase = Math.PI * 2 / 100
+  for (let i = 0; i <= 1; i += 0.01) {
+    const x = i
+    const y = Math.sin(counter) / 2 + 0.5
+    counter += increase
+    console.log(x + ',' + y)
+  }
+}
+
+jQuery(function ($) {
+      // enable syntax highlighting
+      hljs.initHighlightingOnLoad();
+
+      $(document).ready(function() {
+        if(isFileAPIAvailable()) {
+          $('#import-csv').bind('change', handleDialog);
+        }
+      });
+
+      function handleDialog(event) {
+        var files = event.target.files;
+        var file = files[0];
+
+        var fileInfo = `
+          <span style="font-weight:bold;">${escape(file.name)}</span><br>
+          - FileType: ${file.type || 'n/a'}<br>
+          - FileSize: ${file.size} bytes<br>
+          - LastModified: ${file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a'}
+        `;
+        $('#file-info').append(fileInfo);
+
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function(event){
+          var csv = event.target.result;
+          var datas = $.csv.toArrays(csv);
+          datas.forEach(jalankanImport);
+
+          function jalankanImport(value, index, array) {
+            console.log(value);
+            // console.log(index);
+          }
+        }
+      }
 });

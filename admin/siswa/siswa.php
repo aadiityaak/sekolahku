@@ -40,3 +40,15 @@ function register_custom_post_type_siswa() {
         )
     );
 }
+
+add_action('admin_menu', 'wpdocs_register_my_custom_submenu_page');
+function wpdocs_register_my_custom_submenu_page() {
+    add_submenu_page( 
+        'edit.php?post_type=siswa',
+        'Import',
+        'Import',
+        'manage_options',
+        'import-siswa',
+        'sekolahku_import_data_siswa',
+    );
+}
