@@ -30,27 +30,9 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
                 'id'   => $prefix . 'nisn',
             ],
             [
-                'type'    => 'select_advanced',
-                'name'    => esc_html__( 'Kelas', 'sekolahku' ),
-                'id'      => $prefix . 'kelas',
-                'options' => [
-                    'TK'    => esc_html__( 'TK', 'sekolahku' ),
-                    'SD-1A' => esc_html__( 'SD-1A', 'sekolahku' ),
-                    'SD-1B' => esc_html__( 'SD-1B', 'sekolahku' ),
-                    'SD-2A' => esc_html__( 'SD-2A', 'sekolahku' ),
-                    'SD-2B' => esc_html__( 'SD-2B', 'sekolahku' ),
-                    'SD-3A' => esc_html__( 'SD-3A', 'sekolahku' ),
-                    'SD-3B' => esc_html__( 'SD-3B', 'sekolahku' ),
-                    'SD-4A' => esc_html__( 'SD-4A', 'sekolahku' ),
-                    'SD-4B' => esc_html__( 'SD-4B', 'sekolahku' ),
-                    'SD-5A' => esc_html__( 'SD-5A', 'sekolahku' ),
-                    'SD-5B' => esc_html__( 'SD-5B', 'sekolahku' ),
-                    'SD-6A' => esc_html__( 'SD-6A', 'sekolahku' ),
-                    'SD-6B' => esc_html__( 'SD-6B', 'sekolahku' ),
-                    'SMP-7' => esc_html__( 'SMP-7', 'sekolahku' ),
-                    'SMP-8' => esc_html__( 'SMP-8', 'sekolahku' ),
-                    'SMP-9' => esc_html__( 'SMP-9', 'sekolahku' ),
-                ],
+                'type' => 'text',
+                'name' => esc_html__( 'Kelas', 'sekolahku' ),
+                'id'   => $prefix . 'kelas',
             ],
             [
                 'type' => 'number',
@@ -96,15 +78,9 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
         'context'    => 'normal',
         'fields'     => [
             [
-                'type'    => 'select_advanced',
-                'name'    => esc_html__( 'Jenjang Sosial', 'sekolahku' ),
-                'id'      => $prefix . 'jenjang_sosial',
-                'options' => [
-                    'A'    => esc_html__( 'A', 'sekolahku' ),
-                    'B'    => esc_html__( 'B', 'sekolahku' ),
-                    'C'    => esc_html__( 'C', 'sekolahku' ),
-                    'D'    => esc_html__( 'D', 'sekolahku' ),
-                ],
+                'type' => 'text',
+                'name' => esc_html__( 'Jenjang Sosial', 'sekolahku' ),
+                'id'   => $prefix . 'jenjang_sosial',
             ],
             [
                 'type'       => 'post',
@@ -161,6 +137,16 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
                 'type' => 'number',
                 'name' => esc_html__( 'SPP', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_spp',
+            ],
+            [
+                'type' => 'number',
+                'name' => esc_html__( 'Donasi Perbulan', 'sekolahku' ),
+                'id'   => $prefix . 'donasi_perbulan',
+            ],
+            [
+                'type' => 'number',
+                'name' => esc_html__( 'Subsidi Silang', 'sekolahku' ),
+                'id'   => $prefix . 'subsidi_silang',
             ]
         ],
     ];

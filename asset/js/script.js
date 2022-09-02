@@ -64,11 +64,23 @@ jQuery(function ($) {
         reader.onload = function(event){
           var csv = event.target.result;
           var datas = $.csv.toArrays(csv);
+          var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
           datas.forEach(jalankanImport);
-
           function jalankanImport(value, index, array) {
-            console.log(value);
-            // console.log(index);
+            setTimeout(function() {
+                if(numberRegex.test(value[0]) && value[2] != '' ) {
+                    let datasiswa = {
+                        action : 'import_siswa',
+                        data : value
+                    };
+                    $('#result').append('<div class="data-'+value[0]+'">'+index +'. Import data '+ value[2] +'  <span>diprosses!</span></div>');
+                    jQuery.post(obj.ajax_url, datasiswa, function(response) {
+                        $('.data-'+response+' span').html('<span style="color:green;">suksess!</span>');
+                    });
+                } else {
+                    $('#result').append(index +'. Data Tidak Valid!<br>')
+                }
+            }, index*1000);
           }
         }
       }

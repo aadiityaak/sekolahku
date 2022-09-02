@@ -14,8 +14,9 @@ function sekolahku_import_data_siswa() {
         <h2>Import data siswa</h2>
     
         <div>
-            <input type="file" id="import-csv" />
             <div id="result"></div>
+            <input type="file" id="import-csv" />
+            
         </div>
     </div>
     <?php
