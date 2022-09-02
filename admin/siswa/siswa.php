@@ -8,33 +8,35 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// Add admin Menu
-function siswa_menu_items(){
-    add_menu_page( 'Siswa', 'Data Siswa', 'activate_plugins', 'data_siswa', 'sekolahku_siswa_render', SEKOLAHKU_URL .'asset/img/mortarboard.png',30 );
-}
-add_action( 'admin_menu', 'siswa_menu_items' );
+// add post type siswa
+add_action( 'init', 'register_custom_post_type_siswa' );
+function register_custom_post_type_siswa() {
+    register_post_type( 'siswa',
+        array(
+            'labels' => array(
+                'name' => __( 'Siswa' ),
+                'singular_name' => __( 'Siswa' ),
+                'add_new' => __( 'Add New' ),
+                'add_new_item' => __( 'Add New Siswa' ),
+                'edit_item' => __( 'Edit Siswa' ),
+                'new_item' => __( 'New Siswa' ),
+                'view_item' => __( 'View Siswa' ),
+                'search_items' => __( 'Search Siswa' ),
+                'not_found' => __( 'No Siswa found' ),
+                'not_found_in_trash' => __( 'No Siswa found in Trash' ),
+                'parent_item_colon' => __( 'Parent Siswa' ),
+                'menu_name' => __( 'Siswa' ),
+            ),
 
-// Render admin page
-function sekolahku_siswa_render(){
-    $myListTable = new Table_Siswa();
-    add_thickbox();
-    ?>
-    <div class="wrap">
-        <h2>Data Siswa</h2>
-        <div class="alignright">
-            <a href="#" class="button button-primary">Tambah Data</a>
-            <a href="#TB_inline?width=600&height=150&inlineId=import-window" title="Import data dari csv" class="thickbox button button-primary">Import Data</a>
-        </div>
-        <div id="import-window" style="display:none;">
-            <?php sekolahku_import_data(); ?>
-        </div>
-        <form id="data-siswa" method="post">
-        <input type="hidden" name="page" value="'.$_REQUEST['page'].'" />
-        <?php
-            $myListTable->prepare_items(); 
-            $myListTable->display(); 
-        ?>
-        </form>
-    </div>
-    <?php
+            'public' => false,
+            'show_ui' => true,
+            'has_archive' => false,
+            'rewrite' => array('slug' => 'siswa'),
+            'supports' => array( 'title'),
+            'menu_icon' => SEKOLAHKU_URL .'asset/img/mortarboard.png',
+            'capability_type' => 'post',
+            'show_in_rest' => false,
+            'rest_base' => 'siswa',
+        )
+    );
 }
