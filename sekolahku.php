@@ -49,7 +49,7 @@ $siswametas = [
 ];
 
 $files = array(
-	'inc/posts-column.php',
+	'inc/function.php',
 	'inc/enqueue.php',
 	'inc/ajax.php',
     
