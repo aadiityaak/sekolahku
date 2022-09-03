@@ -8,37 +8,14 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
-// add post meta document id
-add_action( 'add_meta_boxes', 'add_meta_box_document_id' );
-function add_meta_box_document_id() {
-    add_meta_box(
-        'document_id',
-        __( 'ID Dokumen', 'textdomain' ),
-        'document_id_callback',
-        'document',
-        'normal',
-        'high'
-    );
-}
-function document_id_callback( $post ) {
-    wp_nonce_field( basename( __FILE__ ), 'document_id_nonce' );
-    $document_id = get_post_meta( $post->ID, 'document_id', true );
-    ?>
-    <p>
-        <label for="document_id"><?php _e( 'ID Dokumen', 'textdomain' ); ?></label>
-        <input type="text" name="document_id" id="document_id" value="<?php echo $document_id; ?>">
-    </p>
-    <?php
-}
-
 // Add the custom columns to the book post type:
 add_filter( 'manage_document_posts_columns', 'set_custom_edit_document_columns' );
 function set_custom_edit_document_columns($columns) {
     unset( $columns['author'] );
     unset( $columns['date'] );
-    $columns['document_id'] = __( 'Document', 'your_text_domain' );
-    $columns['tanggal'] = __( 'Tanggal Upload', 'your_text_domain' );
-    $columns['guru'] = __( 'Guru', 'your_text_domain' );
+    $columns['document_id'] = __( 'Document', 'sekolahku' );
+    $columns['tanggal'] = __( 'Tanggal Upload', 'sekolahku' );
+    $columns['guru'] = __( 'Guru', 'sekolahku' );
 
     return $columns;
 }

@@ -49,16 +49,27 @@ $siswametas = [
 ];
 
 $files = array(
-	'inc/posts-column.php',
+	'inc/function.php',
 	'inc/enqueue.php',
 	'inc/ajax.php',
     
 	'admin/document/document.php',
 	'admin/document/post-type.php',
+	'admin/document/meta-box.php',
 
-	'admin/siswa/Table_Siswa.php',
+	'admin/siswa/siswa.php',
+	'admin/siswa/meta-box.php',
 	'admin/siswa/import.php',
-	'admin/siswa/siswa.php'
+
+	'admin/spp/spp.php',
+	'admin/spp/meta-box.php',
+	'admin/spp/import.php',
+
+	'admin/keuangan/keuangan.php',
+	'admin/keuangan/meta-box.php',
+	'admin/keuangan/import.php',
+
+	'public/document/profile-tab.php'
 
 );
 foreach ( $files as $inc ) {

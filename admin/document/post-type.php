@@ -28,7 +28,8 @@ function register_custom_post_type_document() {
                 'menu_name' => __( 'Dokumen' ),
             ),
 
-            'public' => true,
+            'public' => false,
+            'show_ui' => true,
             'has_archive' => true,
             'rewrite' => array('slug' => 'document'),
             'supports' => array( 'title'),
