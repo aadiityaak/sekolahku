@@ -13,9 +13,9 @@ add_filter( 'manage_document_posts_columns', 'set_custom_edit_document_columns' 
 function set_custom_edit_document_columns($columns) {
     unset( $columns['author'] );
     unset( $columns['date'] );
-    $columns['document_id'] = __( 'Document', 'your_text_domain' );
-    $columns['tanggal'] = __( 'Tanggal Upload', 'your_text_domain' );
-    $columns['guru'] = __( 'Guru', 'your_text_domain' );
+    $columns['document_id'] = __( 'Document', 'sekolahku' );
+    $columns['tanggal'] = __( 'Tanggal Upload', 'sekolahku' );
+    $columns['guru'] = __( 'Guru', 'sekolahku' );
 
     return $columns;
 }

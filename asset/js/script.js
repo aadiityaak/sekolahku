@@ -68,19 +68,26 @@ jQuery(function ($) {
           datas.forEach(jalankanImport);
           function jalankanImport(value, index, array) {
             setTimeout(function() {
-                if(numberRegex.test(value[0]) && value[2] != '' ) {
+                if(numberRegex.test(value[0]) && value[2].length >= 3 ) {
                     let datasiswa = {
                         action : 'import_siswa',
                         data : value
                     };
-                    $('#result').append('<div class="data-'+value[0]+'">'+index +'. Import data '+ value[2] +'  <span>diprosses!</span></div>');
+                    $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[2] +'  <span>diprosses!</span></div>');
                     jQuery.post(obj.ajax_url, datasiswa, function(response) {
-                        $('.data-'+response+' span').html('<span style="color:green;">suksess!</span>');
-                    });
+                      console.log(response.nis);
+                      $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
+                        setTimeout(function() {  
+                          $('.data-'+response.nis).remove();
+                        }, 1000);
+                      });
                 } else {
-                    $('#result').append(index +'. Data Tidak Valid!<br>')
+                    $('#result').append('<div class="data-'+value[0]+'">Data Tidak Valid!</div>');
+                    setTimeout(function() {  
+                      $('.data-'+value[0]).remove();
+                    }, 1000);
                 }
-            }, index*1000);
+            }, index*500);
           }
         }
       }

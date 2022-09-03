@@ -12,11 +12,13 @@ function sekolahku_import_data_siswa() {
     ?>
     <div class="wrap">
         <h2>Import data siswa</h2>
-    
         <div>
             <div id="result"></div>
+            <div id="status">
+                <span class="error"></span>
+                <span class="success"></span>
+            </div>
             <input type="file" id="import-csv" />
-            
         </div>
     </div>
     <?php

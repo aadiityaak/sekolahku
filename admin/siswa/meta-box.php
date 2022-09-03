@@ -20,12 +20,12 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
         'context'    => 'normal',
         'fields'     => [
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'NIS', 'sekolahku' ),
                 'id'   => $prefix . 'nis',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'NISN', 'sekolahku' ),
                 'id'   => $prefix . 'nisn',
             ],
@@ -35,7 +35,7 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
                 'id'   => $prefix . 'kelas',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'HP', 'sekolahku' ),
                 'id'   => $prefix . 'hp',
             ],
@@ -100,7 +100,7 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
                 'id'   => $prefix . 'alamat_orangtua_asuh',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'HP Orangtua Asuh', 'sekolahku' ),
                 'id'   => $prefix . 'hp_orangtua_asuh',
             ]
@@ -114,37 +114,42 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
         'context'    => 'normal',
         'fields'     => [
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'Gedung', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_gedung',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'Seragam', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_seragam',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'Sarana Prasarana', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_sarpras',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'Pendaftaran', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_pendaftaran',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'SPP', 'sekolahku' ),
                 'id'   => $prefix . 'tagihan_spp',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
+                'name' => esc_html__( 'SPP Lebih', 'sekolahku' ),
+                'id'   => $prefix . 'spp_lebih',
+            ],
+            [
+                'type' => 'text',
                 'name' => esc_html__( 'Donasi Perbulan', 'sekolahku' ),
                 'id'   => $prefix . 'donasi_perbulan',
             ],
             [
-                'type' => 'number',
+                'type' => 'text',
                 'name' => esc_html__( 'Subsidi Silang', 'sekolahku' ),
                 'id'   => $prefix . 'subsidi_silang',
             ]
