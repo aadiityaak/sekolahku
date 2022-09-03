@@ -9,6 +9,12 @@
 defined( 'ABSPATH' ) || exit;
 
 function sekolahku_admin_style() {
+    $page = isset($_GET['page']) ? $_GET['page'] : '';
+
+    if($page=='dashboard-sekolah') {
+        wp_enqueue_style('bootstrap-5', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css');
+        wp_enqueue_style('admin-bootstrap', SEKOLAHKU_URL.'asset/css/custom.css');
+    }
     wp_enqueue_style('my-admin-theme', SEKOLAHKU_URL.'asset/css/wp-admin.css');
 
     wp_enqueue_script( 'jquery' );

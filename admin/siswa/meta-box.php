@@ -44,6 +44,17 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
                 'name' => esc_html__( 'Alamat Lengkap', 'sekolahku' ),
                 'id'   => $prefix . 'alamat',
             ],
+            [
+                'type'    => 'select',
+                'name'    => esc_html__( 'Status', 'sekolahku' ),
+                'id'      => $prefix . 'status',
+                'options' => [
+                    'Aktif'     => esc_html__( 'Aktif', 'sekolahku' ),
+                    'Non Aktif' => esc_html__( 'Non Aktif', 'sekolahku' ),
+                    'Alumni'    => esc_html__( 'Alumni', 'sekolahku' ),
+                ],
+                'std'     => 'Aktif',
+            ],
         ],
     ];
 

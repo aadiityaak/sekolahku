@@ -52,6 +52,8 @@ $files = array(
 	'inc/function.php',
 	'inc/enqueue.php',
 	'inc/ajax.php',
+
+	'admin/dashboard/dashboard.php',
     
 	'admin/document/document.php',
 	'admin/document/post-type.php',

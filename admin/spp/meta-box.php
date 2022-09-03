@@ -43,11 +43,11 @@ function sekolahku_spp_meta_box( $meta_boxes ) {
             ],
             [
                 'type'    => 'select_advanced',
-                'name'    => esc_html__( 'Status', 'online-generator' ),
+                'name'    => esc_html__( 'Status', 'sekolahku' ),
                 'id'      => $prefix . 'status',
                 'options' => [
-                    '' => esc_html__( 'Belum dibayar', 'online-generator' ),
-                    'lunas'         => esc_html__( 'Lunas', 'online-generator' ),
+                    '' => esc_html__( 'Belum dibayar', 'sekolahku' ),
+                    'lunas'         => esc_html__( 'Lunas', 'sekolahku' ),
                 ],
             ],
         ],
