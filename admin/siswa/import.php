@@ -13,11 +13,12 @@ function sekolahku_import_data_siswa() {
     <div class="wrap">
         <h2>Import data siswa</h2>
         <div>
-            <div id="result"></div>
-            <div id="status">
-                <span class="error"></span>
-                <span class="success"></span>
+            <div class="format">
+            Format CSV: <br>
+            NIS, Nama Siswa/Siswi, Kelas, HP, Alamat, Ayah, Ibu, Wali, Jenjang Sosial, Seragam, Sarpras, UangGedung, SPP Lebih, pendaftaran, OrangTua Asuh, Alamat, HP, Donasi Bulanan, Subsidi silang, SPP
             </div>
+
+            <div id="result"></div>
             <input type="file" id="import-csv" />
         </div>
     </div>

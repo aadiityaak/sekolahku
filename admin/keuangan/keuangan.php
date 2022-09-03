@@ -41,7 +41,7 @@ function register_custom_post_type_keuangan() {
     );
 }
 
-// add_action('admin_menu', 'sekolahku_keuangan_submenu_page');
+add_action('admin_menu', 'sekolahku_keuangan_submenu_page');
 function sekolahku_keuangan_submenu_page() {
     add_submenu_page( 
         'edit.php?post_type=keuangan',

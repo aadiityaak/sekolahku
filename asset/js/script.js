@@ -43,11 +43,17 @@ jQuery(function ($) {
 
       $(document).ready(function() {
         if(isFileAPIAvailable()) {
-          $('#import-csv').bind('change', handleDialog);
+          $('#import-csv').bind('change', handleImportSiswa);
         }
       });
 
-      function handleDialog(event) {
+      $(document).ready(function() {
+        if(isFileAPIAvailable()) {
+          $('#import-csv-spp').bind('change', handleImportSpp);
+        }
+      });
+
+      function handleImportSiswa(event) {
         var files = event.target.files;
         var file = files[0];
 
@@ -75,6 +81,51 @@ jQuery(function ($) {
                     };
                     $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[2] +'  <span>diprosses!</span></div>');
                     jQuery.post(obj.ajax_url, datasiswa, function(response) {
+                      console.log(response.nis);
+                      $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
+                        setTimeout(function() {  
+                          $('.data-'+response.nis).remove();
+                        }, 1000);
+                      });
+                } else {
+                    $('#result').append('<div class="data-'+value[0]+'">Data Tidak Valid!</div>');
+                    setTimeout(function() {  
+                      $('.data-'+value[0]).remove();
+                    }, 1000);
+                }
+            }, index*500);
+          }
+        }
+      }
+
+      function handleImportSpp(event) {
+        var files = event.target.files;
+        var file = files[0];
+
+        var fileInfo = `
+          <span style="font-weight:bold;">${escape(file.name)}</span><br>
+          - FileType: ${file.type || 'n/a'}<br>
+          - FileSize: ${file.size} bytes<br>
+          - LastModified: ${file.lastModifiedDate ? file.lastModifiedDate.toLocaleDateString() : 'n/a'}
+        `;
+        $('#file-info').append(fileInfo);
+
+        var reader = new FileReader();
+        reader.readAsText(file);
+        reader.onload = function(event){
+          var csv = event.target.result;
+          var datas = $.csv.toArrays(csv);
+          var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+          datas.forEach(jalankanImport);
+          function jalankanImport(value, index, array) {
+            setTimeout(function() {
+                if(numberRegex.test(value[0])) {
+                    let dataspp = {
+                        action : 'import_spp',
+                        data : value
+                    };
+                    $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[0] +'  <span>diprosses!</span></div>');
+                    jQuery.post(obj.ajax_url, dataspp, function(response) {
                       console.log(response.nis);
                       $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
                         setTimeout(function() {  
