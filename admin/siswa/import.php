@@ -18,8 +18,11 @@ function sekolahku_import_data_siswa() {
             NIS, Nama Siswa/Siswi, Kelas, HP, Alamat, Ayah, Ibu, Wali, Jenjang Sosial, Seragam, Sarpras, UangGedung, SPP Lebih, pendaftaran, OrangTua Asuh, Alamat, HP, Donasi Bulanan, Subsidi silang, SPP
             </div>
 
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="import-csv">
+                <label class="input-group-text" for="import-csv">Upload</label>
+            </div>
             <div id="result"></div>
-            <input type="file" id="import-csv" />
         </div>
     </div>
     <?php

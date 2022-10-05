@@ -13,7 +13,7 @@ function sekolahku_admin_style() {
 
     wp_enqueue_script( 'jquery' );
 
-    if($page=='dashboard-sekolah') {
+    if(in_array($page,['dashboard-sekolah','import-siswa']) ) {
         wp_enqueue_style('bootstrap-5', 'https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css');
         wp_enqueue_style('admin-bootstrap', SEKOLAHKU_URL.'asset/css/custom.css');
 

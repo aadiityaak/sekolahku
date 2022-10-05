@@ -13,6 +13,7 @@ function import_siswa() {
 	// print_r($_POST[]);
     global $post;
     $data = isset($_POST['data']) ? $_POST['data'] : [];
+    $index = isset($_POST['index']) ? $_POST['index'] + 1 : [];
     
     $nis = isset($data[0]) ? $data[0]: '';
     $nisn = isset($data[1]) ? $data[1]: '';
@@ -47,7 +48,8 @@ function import_siswa() {
     if(in_array($nis, $sudahada)){
         $response = [
             'nis' => $nis,
-            'status' => 'Database sudah ada!'
+            'status' => 'Database sudah ada!',
+            'index' => $index
         ];
     } else {
         // Gather post data.
@@ -82,7 +84,8 @@ function import_siswa() {
         wp_insert_post( $new_siswa );
         $response = [
             'nis' => $nis,
-            'status' => 'sukses'
+            'status' => 'sukses',
+            'index' => $index
         ];
     }
     wp_send_json($response);

@@ -71,30 +71,68 @@ jQuery(function ($) {
         var csv = event.target.result;
         var datas = $.csv.toArrays(csv);
         var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-        datas.forEach(jalankanImport);
-        function jalankanImport(value, index, array) {
-          setTimeout(function() {
-              if(numberRegex.test(value[0]) && value[2].length >= 3 ) {
-                  let datasiswa = {
-                      action : 'import_siswa',
-                      data : value
-                  };
-                  $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[2] +'  <span>diprosses!</span></div>');
-                  jQuery.post(obj.ajax_url, datasiswa, function(response) {
-                    console.log(response.nis);
-                    $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
-                      setTimeout(function() {  
-                        $('.data-'+response.nis).remove();
-                      }, 1000);
-                    });
-              } else {
-                  $('#result').append('<div class="data-'+value[0]+'">Data Tidak Valid!</div>');
-                  setTimeout(function() {  
-                    $('.data-'+value[0]).remove();
-                  }, 1000);
-              }
-          }, index*500);
+        var totalRow = datas.length;
+        console.log(datas.length);
+        $('#result').append(`
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated progressimport" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="`+totalRow+`"></div>
+        </div>
+        <small class="detail-progress"></small>
+        `);
+
+        let datasiswa = {
+            action : 'import_siswa',
+            data : datas[0],
+            index :0
+        };
+        jQuery.post(obj.ajax_url, datasiswa, function(response) {
+          console.log(response);
+          importBy(response.index);
+        });
+
+        function importBy(index){
+          if(index<totalRow){
+            let percent = Math.round((index/totalRow)*100);
+            $('.progressimport').attr('aria-valuenow', index);
+            $('.progressimport').attr('style','width: '+percent+'%');
+            $('.progressimport').text(percent+'%');
+            $('.detail-progress').text(index+' dari '+totalRow);
+            let datasiswa = {
+              action : 'import_siswa',
+              data : datas[index],
+              index :index
+            };
+            jQuery.post(obj.ajax_url, datasiswa, function(response) {
+              console.log(response);
+              importBy(response.index);
+            });
+          }
         }
+
+        // datas.forEach(jalankanImport);
+        // function jalankanImport(value, index, array) {
+        //   setTimeout(function() {
+        //       if(numberRegex.test(value[0]) && value[2].length >= 3 ) {
+        //           let datasiswa = {
+        //               action : 'import_siswa',
+        //               data : value
+        //           };
+        //           $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[2] +'  <span>diprosses!</span></div>');
+        //           jQuery.post(obj.ajax_url, datasiswa, function(response) {
+        //             console.log(response.nis);
+        //             $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
+        //               setTimeout(function() {  
+        //                 $('.data-'+response.nis).remove();
+        //               }, 1000);
+        //             });
+        //       } else {
+        //           $('#result').append('<div class="data-'+value[0]+'">Data Tidak Valid!</div>');
+        //           setTimeout(function() {  
+        //             $('.data-'+value[0]).remove();
+        //           }, 1000);
+        //       }
+        //   }, index*500);
+        // }
       }
     }
 
