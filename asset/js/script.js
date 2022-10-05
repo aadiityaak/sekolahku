@@ -78,6 +78,7 @@ jQuery(function ($) {
           <div class="progress-bar progress-bar-striped progress-bar-animated progressimport" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="`+totalRow+`"></div>
         </div>
         <small class="detail-progress"></small>
+        <textarea class="logs form-control w-100 mt-2 bg-dark text-white" rows="5"></textarea>
         `);
 
         let datasiswa = {
@@ -96,43 +97,19 @@ jQuery(function ($) {
             $('.progressimport').attr('aria-valuenow', index);
             $('.progressimport').attr('style','width: '+percent+'%');
             $('.progressimport').text(percent+'%');
-            $('.detail-progress').text(index+' dari '+totalRow);
+            $('.detail-progress').text('Mengimport '+index+' dari '+totalRow+' data.');
             let datasiswa = {
               action : 'import_siswa',
               data : datas[index],
               index :index
             };
             jQuery.post(obj.ajax_url, datasiswa, function(response) {
+              $('.logs').prepend(response.nis+' - '+response.status+'\r\n');
               console.log(response);
               importBy(response.index);
             });
           }
         }
-
-        // datas.forEach(jalankanImport);
-        // function jalankanImport(value, index, array) {
-        //   setTimeout(function() {
-        //       if(numberRegex.test(value[0]) && value[2].length >= 3 ) {
-        //           let datasiswa = {
-        //               action : 'import_siswa',
-        //               data : value
-        //           };
-        //           $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[2] +'  <span>diprosses!</span></div>');
-        //           jQuery.post(obj.ajax_url, datasiswa, function(response) {
-        //             console.log(response.nis);
-        //             $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
-        //               setTimeout(function() {  
-        //                 $('.data-'+response.nis).remove();
-        //               }, 1000);
-        //             });
-        //       } else {
-        //           $('#result').append('<div class="data-'+value[0]+'">Data Tidak Valid!</div>');
-        //           setTimeout(function() {  
-        //             $('.data-'+value[0]).remove();
-        //           }, 1000);
-        //       }
-        //   }, index*500);
-        // }
       }
     }
 

@@ -37,18 +37,12 @@ function import_siswa() {
     $subsidi_silang = isset($data[19]) ? $data[19]: '';
     $tagihan_spp = isset($data[20]) ? $data[20]: '';
     
-    $my_query = new WP_Query( 'post_type=siswa&posts_per_page=-1' );
-    $sudahada =[];
-    if ( $my_query->have_posts() ) {
-        while ( $my_query->have_posts() ) {
-            $my_query->the_post();
-            $sudahada[] = get_post_meta($post->ID, 'nis', true);
-        }
-    }
-    if(in_array($nis, $sudahada)){
+    $my_query = new WP_Query( 'post_type=siswa&posts_per_page=-1&meta_key=nis&meta_value='.$nis );
+
+    if($my_query->post_count > 0){
         $response = [
             'nis' => $nis,
-            'status' => 'Database sudah ada!',
+            'status' => 'NIS sudah ada!',
             'index' => $index
         ];
     } else {
