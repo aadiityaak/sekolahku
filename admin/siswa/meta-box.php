@@ -42,7 +42,7 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
             [
                 'type' => 'textarea',
                 'name' => esc_html__( 'Alamat Lengkap', 'sekolahku' ),
-                'id'   => $prefix . 'alamat',
+                'id'   => $prefix . 'alamat_lengkap',
             ],
             [
                 'type'    => 'select',

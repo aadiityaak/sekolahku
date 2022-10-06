@@ -33,7 +33,6 @@ global.drawSine = function () {
     const x = i
     const y = Math.sin(counter) / 2 + 0.5
     counter += increase
-    console.log(x + ',' + y)
   }
 }
 
@@ -68,47 +67,71 @@ jQuery(function ($) {
       var reader = new FileReader();
       reader.readAsText(file);
       reader.onload = function(event){
-        var csv = event.target.result;
-        var datas = $.csv.toArrays(csv);
-        var numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-        var totalRow = datas.length;
-        console.log(datas.length);
+
         $('#result').append(`
         <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated progressimport" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="`+totalRow+`"></div>
+          <div class="progress-bar progress-bar-striped progress-bar-animated progressimport" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="`+datas('length')+`"></div>
         </div>
         <small class="detail-progress"></small>
         <textarea class="logs form-control w-100 mt-2 bg-dark text-white" rows="5"></textarea>
         `);
 
-        let datasiswa = {
-            action : 'import_siswa',
-            data : datas[0],
-            index :0
-        };
-        jQuery.post(obj.ajax_url, datasiswa, function(response) {
-          console.log(response);
-          importBy(response.index);
-        });
 
-        function importBy(index){
-          if(index<totalRow){
-            let percent = Math.round((index/totalRow)*100);
-            $('.progressimport').attr('aria-valuenow', index);
-            $('.progressimport').attr('style','width: '+percent+'%');
-            $('.progressimport').text(percent+'%');
-            $('.detail-progress').text('Mengimport '+index+' dari '+totalRow+' data.');
-            let datasiswa = {
-              action : 'import_siswa',
-              data : datas[index],
-              index :index
-            };
-            jQuery.post(obj.ajax_url, datasiswa, function(response) {
-              $('.logs').prepend(response.nis+' - '+response.status+'\r\n');
-              console.log(response);
-              importBy(response.index);
-            });
+        importBy(1);
+
+        function datas(index) {
+          let csv = event.target.result;
+          let datas = $.csv.toArrays(csv);
+          // let output = datas[index];
+          // output = output?.map(x => x !== '' ? x : "-");
+          if(index == 'length'){
+            return datas.length;
           }
+          return datas[index];
+        }
+
+        function associate(keys, values){
+          return keys.reduce(function (previous, key, index) {
+              previous[key] = values[index];
+              return previous
+          }, {})
+        } 
+        function importBy(index){
+          if(index<datas('length')){
+            let keys = datas(0);
+            let values = datas(index);
+            let assocDatas = associate(keys, values);
+            let numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
+            console.log(assocDatas);
+            if(numberRegex.test(assocDatas['nis']) && assocDatas['nama_siswa'] != '') {
+              let percent = Math.round((index/datas('length'))*100);
+              $('.progressimport').attr('aria-valuenow', index);
+              $('.progressimport').attr('style','width: '+percent+'%');
+              $('.progressimport').text(percent+'%');
+              $('.detail-progress').text('Mengimport '+index+' dari '+datas('length')+' data.');
+              console.log('a');
+              import_ajax(index,assocDatas);
+
+            } else {
+              console.log('b');
+              import_ajax(index,assocDatas);
+              $('.logs').prepend('Data '+index+' tidak valid!\r\n');
+            }
+          }
+        }
+
+        function import_ajax(index,assocDatas) {
+          let datasiswa = {
+            action : 'import_siswa',
+            data : assocDatas,
+            index :index
+          };
+          console.log(datasiswa);
+          jQuery.post(obj.ajax_url, datasiswa, function(response) {
+            
+            $('.logs').prepend(response.nis+' - '+response.status+'\r\n');
+            importBy(response.index);
+          });
         }
       }
     }
@@ -141,7 +164,6 @@ jQuery(function ($) {
                   };
                   $('#result').append('<div class="data-'+value[0]+'">Import data '+ value[0] +'  <span>diprosses!</span></div>');
                   jQuery.post(obj.ajax_url, dataspp, function(response) {
-                    console.log(response.nis);
                     $('.data-'+response.nis+' span').html('<span style="color:green;">'+response.status+'!</span>');
                       setTimeout(function() {  
                         $('.data-'+response.nis).remove();
