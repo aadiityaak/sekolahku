@@ -102,19 +102,14 @@ jQuery(function ($) {
             let values = datas(index);
             let assocDatas = associate(keys, values);
             let numberRegex = /^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/;
-            console.log(assocDatas);
+            import_ajax(index, assocDatas);
             if(numberRegex.test(assocDatas['nis']) && assocDatas['nama_siswa'] != '') {
               let percent = Math.round((index/datas('length'))*100);
               $('.progressimport').attr('aria-valuenow', index);
               $('.progressimport').attr('style','width: '+percent+'%');
               $('.progressimport').text(percent+'%');
               $('.detail-progress').text('Mengimport '+index+' dari '+datas('length')+' data.');
-              console.log('a');
-              import_ajax(index,assocDatas);
-
             } else {
-              console.log('b');
-              import_ajax(index,assocDatas);
               $('.logs').prepend('Data '+index+' tidak valid!\r\n');
             }
           }
@@ -126,9 +121,8 @@ jQuery(function ($) {
             data : assocDatas,
             index :index
           };
-          console.log(datasiswa);
           jQuery.post(obj.ajax_url, datasiswa, function(response) {
-            
+            console.log(response);
             $('.logs').prepend(response.nis+' - '+response.status+'\r\n');
             importBy(response.index);
           });
