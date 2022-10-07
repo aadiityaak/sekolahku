@@ -16,7 +16,7 @@ function set_custom_edit_siswa_columns($columns) {
     $columns['nis'] = __( 'NIS', 'sekolahku' );
     $columns['kelas'] = __( 'Kelas', 'sekolahku' );
     $columns['hp'] = __( 'HP', 'sekolahku' );
-    $columns['alamat'] = __( 'Alamat', 'sekolahku' );
+    $columns['alamat_lengkap'] = __( 'Alamat', 'sekolahku' );
 
     return $columns;
 }
@@ -51,8 +51,8 @@ function custom_siswa_column( $column, $post_id ) {
                 echo $nohp.'<br>';
             }
             break;
-        case 'alamat' :
-            $alamat = get_post_meta( $post_id , 'alamat' , true);
+        case 'alamat_lengkap' :
+            $alamat = get_post_meta( $post_id , 'alamat_lengkap' , true);
             echo $alamat;
             break;
 
