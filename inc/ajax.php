@@ -25,7 +25,7 @@ function import_siswa() {
     if($data['nama_siswa'] == '') {
         $response ['status'] = 'Skip';
     } else {
-        $response ['status'] = 'Sukses';
+        $response ['status'] = 'Update data berhasil';
         $data_meta = $data;
         unset($data_meta['nama_siswa']);
         

@@ -82,10 +82,9 @@ jQuery(function ($) {
         function datas(index) {
           let csv = event.target.result;
           let datas = $.csv.toArrays(csv);
-          // let output = datas[index];
-          // output = output?.map(x => x !== '' ? x : "-");
+
           if(index == 'length'){
-            return datas.length;
+            return datas.length - 1;
           }
           return datas[index];
         }
@@ -97,7 +96,7 @@ jQuery(function ($) {
           }, {})
         } 
         function importBy(index){
-          if(index<datas('length')){
+          if(index<=datas('length')){
             let keys = datas(0);
             let values = datas(index);
             let assocDatas = associate(keys, values);
