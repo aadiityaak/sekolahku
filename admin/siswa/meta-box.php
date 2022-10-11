@@ -36,6 +36,11 @@ function sekolahku_siswa_meta_box( $meta_boxes ) {
             ],
             [
                 'type' => 'text',
+                'name' => esc_html__( 'Jenjang', 'sekolahku' ),
+                'id'   => $prefix . 'jenjang',
+            ],
+            [
+                'type' => 'text',
                 'name' => esc_html__( 'HP', 'sekolahku' ),
                 'id'   => $prefix . 'hp',
             ],

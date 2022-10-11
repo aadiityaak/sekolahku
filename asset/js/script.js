@@ -84,7 +84,7 @@ jQuery(function ($) {
           let datas = $.csv.toArrays(csv);
 
           if(index == 'length'){
-            return datas.length - 1;
+            return datas.length;
           }
           return datas[index];
         }
@@ -96,7 +96,7 @@ jQuery(function ($) {
           }, {})
         } 
         function importBy(index){
-          if(index<=datas('length')){
+          if(index < datas('length')){
             let keys = datas(0);
             let values = datas(index);
             let assocDatas = associate(keys, values);
@@ -111,6 +111,9 @@ jQuery(function ($) {
             } else {
               $('.logs').prepend('Data '+index+' tidak valid!\r\n');
             }
+          } else if(index >= datas('length')) {
+            $('.progressimport').removeClass('progress-bar-striped progress-bar-animated');
+            $('.detail-progress').text('Import data selesai.');
           }
         }
 

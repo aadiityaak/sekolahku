@@ -25,6 +25,38 @@ function sekolahku_dasboard(){
 add_action( 'admin_menu', 'sekolahku_dasboard' );
 
 function sekolahku_view_dashboard() {
+    $sd_args = array(
+        'posts_per_page'   => -1,
+        'orderby'          => 'post_date',
+        'order'            => 'DESC',
+        'post_status'      => 'publish',
+        'post_type'        => 'siswa',
+        'meta_query' => array(
+            array(
+                'key'     => 'jenjang',
+                'value'   => 'sd',
+                'compare' => 'LIKE',
+            ),
+        ),
+    );
+    $tk_args = array(
+        'posts_per_page'   => -1,
+        'orderby'          => 'post_date',
+        'order'            => 'DESC',
+        'post_status'      => 'publish',
+        'post_type'        => 'siswa',
+        'meta_query' => array(
+            array(
+                'key'     => 'jenjang',
+                'value'   => 'tk',
+                'compare' => 'LIKE',
+            ),
+        ),
+    );
+    
+    $get_post_sd = $the_query = new WP_Query( $sd_args );
+    $get_post_tk = $the_query = new WP_Query( $tk_args );
+    // print_r($get_post_sd);
     ?>
         <div class="container py-3">
             <div class="row">
@@ -32,7 +64,7 @@ function sekolahku_view_dashboard() {
                     <div class="card border-0 bg-gradient-1 text-white">
                         <div class="p-2">
                             <h5 class="card-title">TKB</h5>
-                            <p class="card-text">50</p>
+                            <p class="card-text"><?php echo $get_post_tk->post_count; ?></p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +72,7 @@ function sekolahku_view_dashboard() {
                     <div class="card border-0 bg-gradient-1 text-white">
                         <div class="p-2">
                             <h5 class="card-title">SD</h5>
-                            <p class="card-text">300</p>
+                            <p class="card-text"><?php echo $get_post_sd->post_count; ?></p>
                         </div>
                     </div>
                 </div>
