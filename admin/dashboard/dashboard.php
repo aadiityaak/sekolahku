@@ -34,11 +34,11 @@ function sekolahku_view_dashboard()
         'order'            => 'DESC',
         'post_status'      => 'publish',
         'post_type'        => 'siswa',
-        'meta_query' => array(
+        'tax_query' => array(
             array(
-                'key'     => 'jenjang',
-                'value'   => 'pondok',
-                'compare' => 'LIKE',
+                'taxonomy' => 'jenjang',
+                'field'    => 'slug',
+                'terms'    => 'pondok',
             ),
         ),
     );
@@ -48,11 +48,11 @@ function sekolahku_view_dashboard()
         'order'            => 'DESC',
         'post_status'      => 'publish',
         'post_type'        => 'siswa',
-        'meta_query' => array(
+        'tax_query' => array(
             array(
-                'key'     => 'jenjang',
-                'value'   => 'smp',
-                'compare' => 'LIKE',
+                'taxonomy' => 'jenjang',
+                'field'    => 'slug',
+                'terms'    => 'smp',
             ),
         ),
     );
@@ -62,11 +62,11 @@ function sekolahku_view_dashboard()
         'order'            => 'DESC',
         'post_status'      => 'publish',
         'post_type'        => 'siswa',
-        'meta_query' => array(
+        'tax_query' => array(
             array(
-                'key'     => 'jenjang',
-                'value'   => 'sd',
-                'compare' => 'LIKE',
+                'taxonomy' => 'jenjang',
+                'field'    => 'slug',
+                'terms'    => 'sd',
             ),
         ),
     );
@@ -76,11 +76,11 @@ function sekolahku_view_dashboard()
         'order'            => 'DESC',
         'post_status'      => 'publish',
         'post_type'        => 'siswa',
-        'meta_query' => array(
+        'tax_query' => array(
             array(
-                'key'     => 'jenjang',
-                'value'   => 'tk',
-                'compare' => 'LIKE',
+                'taxonomy' => 'jenjang',
+                'field'    => 'slug',
+                'terms'    => 'tk',
             ),
         ),
     );

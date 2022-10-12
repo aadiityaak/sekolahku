@@ -1,16 +1,16 @@
 <?php
 /**
- * @link              dev.websweet.xyz
+ * @link              websweet.xyz
  * @since             1.2.0
  * @package           sekolahku
  *
  * @wordpress-plugin
  * Plugin Name:       Sekolahku
- * Plugin URI:        dev.websweet.xyz
+ * Plugin URI:        websweet.xyz
  * Description:       Plugin Sekolahan
  * Version:           1.6.1
  * Author:            Aditya Kristyanto
- * Author URI:        dev.websweet.xyz
+ * Author URI:        websweet.xyz
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       sekolahku
