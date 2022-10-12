@@ -16,6 +16,7 @@ function import_siswa()
     $data = isset($_POST['data']) ? $_POST['data'] : [];
     $nis = isset($_POST['data']['nis']) ? $_POST['data']['nis'] : '';
     $index = isset($_POST['index']) ? $_POST['index'] + 1 : '';
+    $jenjang = isset($_POST['data']['jenjang']) ? $_POST['data']['jenjang'] : '';
 
     $response = [
         'nis' => $nis,
@@ -29,6 +30,7 @@ function import_siswa()
     } else {
         $data_meta = $data;
         unset($data_meta['nama_siswa']);
+        unset($data_meta['jenjang']);
         $my_query = new WP_Query('post_type=siswa&posts_per_page=-1&meta_key=nis&meta_value=' . $data['nis']);
         if ($my_query->post_count > 0) {
             if ($my_query->have_posts()) {
@@ -41,6 +43,7 @@ function import_siswa()
                     );
 
                     wp_update_post($post_update);
+                    set_term($post->ID, $jenjang, 'jenjang');
                     $response['status'] = 'Update data berhasil.';
                 } // end while
             } // end if
@@ -53,13 +56,38 @@ function import_siswa()
                 'meta_input'   => $data_meta,
             ];
             // Insert the post into the database.
-            wp_insert_post($new_siswa);
+            set_term($new_siswa, $jenjang, 'jenjang');
             $response['status'] = 'Import data berhasil.';
         }
     }
 
     wp_send_json($response);
     wp_die();
+}
+
+function set_term($pid, $cat_name, $taxonomy) {
+    $append = true ;// true means it will add the cateogry beside already set categories. false will overwrite
+
+    //get the category to check if exists
+    $cat  = get_term_by('name', $cat_name , $taxonomy);
+
+    //check existence
+    if($cat == false){
+
+        //cateogry not exist create it 
+        $cat = wp_insert_term($cat_name, $taxonomy);
+
+        //category id of inserted cat
+        $cat_id = $cat['term_id'] ;
+
+    }else{
+
+        //category already exists let's get it's id
+        $cat_id = $cat->term_id ;
+    }
+
+    //setting post category 
+    $res=wp_set_post_terms($pid,array($cat_id),$taxonomy ,$append);
 }
 
 add_action('wp_ajax_import_spp', 'import_spp');

@@ -103,3 +103,35 @@ function wpdocs_register_my_custom_submenu_page() {
         'sekolahku_import_data_siswa',
     );
 }
+
+//Creat Jenjang Taxonomy
+function wpdocs_create_jenjang_tax() {
+	register_taxonomy( 'jenjang', 'siswa', array(
+		'label'        => __( 'Jenjang', 'sekolahku' ),
+		'rewrite'      => array( 'slug' => 'jenjang' ),
+		'hierarchical' => true,
+        'show_admin_column' => true,
+	) );
+}
+add_action( 'init', 'wpdocs_create_jenjang_tax', 0 );
+
+//Creating Filters With Custom Taxonomy
+add_action( 'restrict_manage_posts', 'filter_by_jenjang' );
+function filter_by_jenjang() {
+    $screen = get_current_screen();
+    global $wp_query;
+    if ( $screen->post_type == 'siswa' ) {
+        wp_dropdown_categories( array(
+            'show_option_all' => 'Semua Jenjang',
+            'taxonomy' => 'jenjang',
+            'name' => 'jenjang',
+            'orderby' => 'name',
+            'selected' => ( isset( $wp_query->query['jenjang'] ) ? $wp_query->query['jenjang'] : '' ),
+            'hierarchical' => true,
+            'depth' => 3,
+            'show_count' => true,
+            'hide_empty' => false,
+            'value_field' => 'slug',
+        ) );
+    }
+}

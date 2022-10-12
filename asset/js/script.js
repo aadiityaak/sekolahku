@@ -84,7 +84,7 @@ jQuery(function ($) {
           let datas = $.csv.toArrays(csv);
 
           if(index == 'length'){
-            return datas.length;
+            return datas.length - 1;
           }
           return datas[index];
         }
