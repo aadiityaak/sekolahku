@@ -8,7 +8,7 @@
  * Plugin Name:       Sekolahku
  * Plugin URI:        dev.websweet.xyz
  * Description:       Plugin Sekolahan
- * Version:           1.6.0
+ * Version:           1.6.1
  * Author:            Aditya Kristyanto
  * Author URI:        dev.websweet.xyz
  * License:           GPL-2.0+
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'SEKOLAHKU_VERSION', '1.6.0' );
+define( 'SEKOLAHKU_VERSION', '1.6.1' );
 
 /**
  * Define plugin path url
