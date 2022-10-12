@@ -57,7 +57,7 @@ function import_siswa()
             ];
             // Insert the post into the database.
             $id_siswa = wp_insert_post($new_siswa);
-            set_term($idsiswa, $jenjang, 'jenjang');
+            set_term($id_siswa, $jenjang, 'jenjang');
             $response['status'] = 'Import data berhasil.';
         }
     }
