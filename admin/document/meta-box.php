@@ -24,6 +24,21 @@ function sekolahku_dokumen_meta_box( $meta_boxes ) {
                 'name' => esc_html__( 'Dokumen', 'sekolahku' ),
                 'id'   => $prefix . 'document_id',
             ],
+            [
+            'type'       => 'post',
+            'name'       => esc_html__('Siswa', 'online-generator'),
+            'id'         => $prefix . 'siswa',
+            'post_type'  => 'siswa',
+            'field_type' => 'select_advanced',
+            'query_args' => [
+                '' => '',
+            ],
+            ],
+            [
+                'type' => 'number',
+                'name' => esc_html__( 'NIS', 'online-generator' ),
+                'id'   => $prefix . 'nis',
+            ],
         ],
     ];
 

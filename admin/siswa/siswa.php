@@ -41,7 +41,7 @@ function custom_siswa_column( $column, $post_id ) {
             echo $nis;
             break;
         case 'kelas' :
-            $kelas = get_post_meta( $post_id , 'kelas' , true);
+            $kelas = get_post_meta( $post_id , 'rombel_saat_ini' , true);
             echo $kelas;
             break;
         case 'hp' :
@@ -52,7 +52,7 @@ function custom_siswa_column( $column, $post_id ) {
             }
             break;
         case 'alamat_lengkap' :
-            $alamat = get_post_meta( $post_id , 'alamat_lengkap' , true);
+            $alamat = get_post_meta( $post_id , 'alamat' , true);
             echo $alamat;
             break;
 
