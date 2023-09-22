@@ -84,6 +84,9 @@ $files = array(
     // 'admin/data/data-siswa.php',
     // 'admin/data/meta-box.php',
 
+    'admin/form-ppdb/form-ppdb.php',
+    'admin/form-ppdb/meta-box.php',
+
     'public/document/profile-tab.php'
 
 );

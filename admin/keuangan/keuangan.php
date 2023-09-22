@@ -81,4 +81,4 @@ function cek_peran_keuangan() {
 }
 
 // Hook ke dalam init atau hook lain yang sesuai
-add_action('init', 'cek_peran_keuangan');
+// add_action('init', 'cek_peran_keuangan');
