@@ -52,3 +52,33 @@ function sekolahku_keuangan_submenu_page() {
         'sekolahku_import_data_keuangan',
     );
 }
+
+// Fungsi untuk mengecek peran pengguna
+function cek_peran_keuangan() {
+    $current_user = wp_get_current_user();
+    if (in_array('keuangan', $current_user->roles)) {
+        // Tindakan yang akan diambil jika peran adalah 'keuangan'
+        ?>
+            <style>
+                #menu-posts-buku,
+                #menu-posts-absensi,
+                #menu-posts-document,
+                #menu-posts-absensi,
+                #menu-posts-tahfiz {
+                    display: none !important;
+                }
+            </style>
+        <?php
+    } else {
+        ?>
+            <style>
+                #menu-posts-keuangan {
+                    display: none !important;
+                }
+            </style>
+        <?php
+    }
+}
+
+// Hook ke dalam init atau hook lain yang sesuai
+add_action('init', 'cek_peran_keuangan');

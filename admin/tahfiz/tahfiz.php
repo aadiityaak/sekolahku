@@ -322,7 +322,13 @@ function data_tahfis($siswa = '')
                 ?>
                     <tr>
                         <th scope="row"><?php echo $m++; ?></th>
-                        <td><?php echo get_post_meta($post->ID, 'jenis_setoran', true); ?></td>
+                        <td>
+                            <?php 
+                            $jenis_setoran = get_post_meta($post->ID, 'jenis_setoran', true); 
+                            $jenis_setoran = ($jenis_setoran == 'Murojaah') ? 'Murojaah Hafalan Baru' : $jenis_setoran;
+                            echo $jenis_setoran;
+                            ?>              
+                        </td>
                         <td><?php echo get_post_meta($post->ID, 'tanggal', true); ?></td>
                         <td>
                             <?php

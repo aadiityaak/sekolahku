@@ -68,9 +68,9 @@ $files = array(
     // 'admin/spp/meta-box.php',
     // 'admin/spp/import.php',
 
-    // 'admin/keuangan/keuangan.php',
-    // 'admin/keuangan/meta-box.php',
-    // 'admin/keuangan/import.php',
+    'admin/keuangan/keuangan.php',
+    'admin/keuangan/meta-box.php',
+    'admin/keuangan/import.php',
 
     'admin/buku/buku.php',
     'admin/buku/meta-box.php',
