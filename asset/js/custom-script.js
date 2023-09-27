@@ -17,4 +17,26 @@ jQuery(function ($) {
       loadCSS: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     });
   });
-  });
+});
+
+// Fungsi untuk menghasilkan angka acak 3 digit
+function generateRandomNumber() {
+  return Math.floor(100 + Math.random() * 900); // Angka antara 100 dan 999
+}
+
+jQuery(function ($) {
+  // Menambahkan atribut readonly ke elemen input
+    $('input[name="post_data[post_title]"]').prop('readonly', true);
+
+  // Mengisi nilai elemen dengan format yang diinginkan
+  var currentDate = new Date();
+  var formattedDate =
+    "PPDB" +
+    ("0" + currentDate.getDate()).slice(-2) + // Hari (dd)
+    ("0" + (currentDate.getMonth() + 1)).slice(-2) + // Bulan (mm)
+    (currentDate.getFullYear() % 100) + // Tahun 2 digit terakhir (yy)
+    generateRandomNumber(); // 3 angka acak
+
+  // Mengisi nilai elemen dengan format yang dihasilkan
+  $('input[name="post_data[post_title]"]').val(formattedDate);
+});

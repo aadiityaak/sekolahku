@@ -170,5 +170,26 @@ function your_prefix_register_meta_boxes_form_ppdb( $meta_boxes ) {
         ],
     ];
 
+    $meta_boxes[] = [
+        'title'      => esc_html__( 'Detail Status', 'online-generator' ),
+        'id'         => 'detail_status',
+        'post_types' => 'form-ppdb',
+        'context'    => 'normal',
+        'fields'     => [
+            [
+                'type'    => 'select',
+                'name'    => esc_html__( 'Status', 'online-generator' ),
+                'id'      => $prefix . 'status',
+                'options' => [
+                    'Pengajuan'                 => esc_html__( 'Pengajuan', 'online-generator' ),
+                    'Belum Membayar Registrasi' => esc_html__( 'Belum Membayar Registrasi', 'online-generator' ),
+                    'Teregristasi'              => esc_html__( 'Teregristasi', 'online-generator' ),
+                    'Regristasi Gagal'          => esc_html__( 'Regristasi Gagal', 'online-generator' ),
+                ],
+                'placeholder' => esc_html__( 'Pilih Opsi', 'online-generator' ),
+            ],
+        ],
+    ];
+
     return $meta_boxes;
 }
