@@ -64,19 +64,14 @@ $files = array(
     'admin/siswa/meta-box.php',
     'admin/siswa/import.php',
 
-    // 'admin/spp/spp.php',
-    // 'admin/spp/meta-box.php',
-    // 'admin/spp/import.php',
-
-    'admin/keuangan/keuangan.php',
-    'admin/keuangan/meta-box.php',
-    'admin/keuangan/import.php',
-
     'admin/buku/buku.php',
     'admin/buku/meta-box.php',
 
     'admin/absensi/absensi.php',
     'admin/absensi/meta-box.php',
+
+    'admin/karakter/karakter.php',
+    'admin/karakter/meta-box.php',
 
     'admin/tahfiz/tahfiz.php',
     'admin/tahfiz/meta-box.php',
@@ -105,7 +100,21 @@ $trial = isset($_GET['trial']) ? $_GET['trial'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 if ($trial && $id) {
     $meta = get_post_meta($id);
-  //  echo '<pre>';
-  //  print_r($meta);
-  //  echo '</pre>';
+    //  echo '<pre>';
+    //  print_r($meta);
+    //  echo '</pre>';
+}
+
+add_filter('cf7_2_post_filter_taxonomy_registration-{$taxonomy_slug}', 'register_custom_tags');
+/**
+ * Function to modify the registration of the custom taxonomy '{$taxonomy_slug}' created by the Post My CF7 Form plugin.
+ * Hooked on 'cf7_2_post_filter_taxonomy_registration-{$taxonomy_slug}'
+ * @param array $taxonomy_arg an array containing arguments used to register the custom taxonomy.
+ * @return array  an array of arguments.
+ */
+
+function register_custom_tags($taxonomy_arg)
+{
+    $taxonomy_arg['hierarchical'] = false;
+    return $taxonomy_arg;
 }
