@@ -26,17 +26,91 @@ ob_start();
 ?>
 <!DOCTYPE html>
 <html>
+<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Resi</title>
+    <style>
+        .font-arab {
+            font-family: 'Amiri', 'Arial', sans-serif;
+            line-height: 0.75 !important;
+            unicode-bidi: embed;
+        }
+
+        .kop-header {
+            display: flex;
+            align-items: center;
+            padding-bottom: 0px;
+            margin-bottom: 10px;
+        }
+
+        .kop-header img {
+            width: 80px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .konten-info {
+            text-align: left;
+        }
+
+        body {
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            color: #000;
+            margin: 0;
+            /* Tambahkan ini untuk menghilangkan margin default */
+            padding: 0;
+            /* Tambahkan ini untuk menghilangkan padding default */
+        }
+
+        .container {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        .text-end {
+            width: 250px;
+            min-height: 100px;
+            text-align: center;
+            border-bottom: dotted 1px #ccc;
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .page_break {
+            page-break-before: always;
+        }
+
+        /* Mencegah page break di elemen terakhir */
+        .container:last-child {
+            page-break-after: avoid;
+        }
+    </style>
 </head>
 
 <body>
     <?php
     global $post;
 
-    // Query untuk mendapatkan post berdasarkan meta 'nis'
     $the_query = new WP_Query([
         'meta_query' => [
             [
@@ -49,105 +123,109 @@ ob_start();
     ]);
     ?>
     <?php if ($the_query->have_posts() && $nis) : ?>
-        <?php while ($the_query->have_posts()) : $the_query->the_post(); ?>
-            <div class="container text-dark">
+        <?php
+        $count = 0; // Inisialisasi counter
+        $total_posts = $the_query->post_count; // Hitung total post
+        while ($the_query->have_posts()) : $the_query->the_post();
+            $count++; // Increment counter
+        ?>
+            <div class="container">
                 <div id="contentToPrint" class="print-me">
-                    <style>
-                        .table td {
-                            font-size: 11px;
-                            border-top: 0 !important;
-                            padding: 5px;
-                        }
-
-                        .page_break {
-                            page-break-before: always;
-                        }
-
-                        body {
-                            font-size: 14px;
-                            font-family: 'Arial', sans-serif;
-                        }
-                    </style>
-                    <div class="card w-100 mb-4 mt-3">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Nama
-                                <b><?php echo get_the_title(get_post_meta($post->ID, 'siswa', true)); ?></b>
-                            </li>
-                            <li class="list-group-item">Rombel Saat Ini <b><?php echo get_post_meta($post->ID, 'kelas', true); ?></b></li>
-                            <li class="list-group-item">Bulan <b><?php
-                                                                    $bulan_value = get_post_meta($post->ID, 'bulan', true);
-                                                                    echo date_format(date_create($bulan_value), 'F Y');
-                                                                    ?></b></li>
-                        </ul>
-                    </div>
-                    <div class="mt-4">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Kegiatan</th>
-                                    <th scope="col">Nilai</th>
-                                    <th scope="col">Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $data_groups = [
-                                    'Ibadah' => [
-                                        'sholat_fardu' => 'Sholat Fardu',
-                                        'sholat_rawatib' => 'Sholat Rawatib',
-                                        'sholat_lail_witir' => 'Sholat Lail/Witir',
-                                        'sholat_dhuha' => 'Sholat Dhuha',
-                                        'sholat_syuruq' => 'Sholat Syuruq'
-                                    ],
-                                    'Kebersihan dan Kerapian' => [
-                                        'piket' => 'Piket',
-                                        'merawat_pakaian' => 'Merawat Pakaian',
-                                        'ranjang_dan_lemari' => 'Ranjang dan Lemari',
-                                        'kerapian_pakaian' => 'Kerapian Pakaian'
-                                    ],
-                                    'Kedisiplinan' => [
-                                        'kehadiran_disekolah' => 'Kehadiran di Sekolah',
-                                        'kehadiran_dalam_taklim' => 'Kehadiran dalam Taklim',
-                                        'kehadiran_dalam_ekstrakulikuler' => 'Kehadiran dalam Ekstrakurikuler'
-                                    ],
-                                    'Adab dan Akhlak' => [
-                                        'ketika_di_masjid' => 'Ketika di Masjid',
-                                        'makan_dan_minum' => 'Makan dan Minum',
-                                        'ketika_belajar' => 'Ketika Belajar',
-                                        'berinteraksi_dengan_ustadz' => 'Berinteraksi dengan Ustadz',
-                                        'berinteraksi_dengan_seksama' => 'Berinteraksi dengan Sesama'
-                                    ]
-                                ];
-
-                                foreach ($data_groups as $group_name => $items) {
-                                    echo "<tr><td colspan='3'><b>$group_name</b></td></tr>";
-                                    $average = [];
-                                    foreach ($items as $key => $label) {
-                                        $nilai = get_post_meta($post->ID, $key, true);
-                                        echo "<tr><td class='ps-3'>$label</td><td>$nilai</td><td>" . predikat($nilai) . "</td></tr>";
-                                        $average[] = $nilai;
-                                    }
-                                }
-
-                                $average_score = array_sum($average) / count($average);
-                                echo "<tr class='bg-light'><td class='ps-3'><b>Rata - Rata</b></td><td><b>$average_score</b></td><td><b>" . predikat($average_score) . "</b></td></tr>";
-                                ?>
-                            </tbody>
+                    <div class="kop-header" style="border-bottom: double 5px #ccc;">
+                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
+                            <tr>
+                                <td style="vertical-align: middle; text-align: left; width: 70px;">
+                                    <img src="https://www.sekolahsunnahalfalah.com/wp-content/uploads/2021/12/fav.png" alt="Logo Sekolah" style="width: 60px; height: auto;">
+                                </td>
+                                <td style="vertical-align: middle; text-align: center;">
+                                    <h2 style="margin: 0px; text-transform: uppercase;"><strong>Sekolah Sunnah Al Falah Klaten</strong></h2>
+                                    <span style="display: block;">Jl. Posis - Cawas Km. 7 Garingan, Tlingsing, Cawas, Klaten, Klaten, Jawa Tengah, Indonesia 57463</span>
+                                    <span style="display: block;">Website: www.sekolahsunnahalfalah.com | Fax/Telp: 02728851155</strong></span>
+                                    <span style="display: block;"><strong>NPSN KB 69985347 | NPSN TK 69968851 | NPSN SD 69786372 | NPSN SMP 69947987</span>
+                                </td>
+                            </tr>
                         </table>
                     </div>
-                    <div class="mt-2">
-                        <b class="p-1">Catatan :</b>
-                        <div class="p-1"><?php echo get_post_meta($post->ID, 'catatan', true); ?></div>
-                    </div>
-                    <div class="text-end" style="border-bottom: 1px dotted #cccccc; width: 200px; margin: 0 auto; text-align: center; margin-top: 30px;">
-                        <span>Cawas, <?php echo date('d F Y'); ?></span><br>
-                        <span>Kepala Kesantrian</span><br><br><br>
+                    <div style="font-size: 14px; text-align: center; background-color: #f2f2f2; padding: 5px 10px; border: solid 1px #ccc;">
+                        <span><strong>Nama:</strong> <?php echo get_the_title(get_post_meta($post->ID, 'siswa', true)); ?> | </span>
+                        <span><strong>Rombel Saat Ini:</strong> <?php echo get_post_meta($post->ID, 'kelas', true); ?> | </span>
+                        <span><strong>Bulan:</strong>
+                            <?php
+                            $bulan_value = get_post_meta($post->ID, 'bulan', true);
+                            echo date_format(date_create($bulan_value), 'F Y');
+                            ?>
                     </div>
                 </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kegiatan</th>
+                            <th>Nilai</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $data_groups = [
+                            'Ibadah' => [
+                                'sholat_fardu' => 'Sholat Fardu',
+                                'sholat_rawatib' => 'Sholat Rawatib',
+                                'sholat_lail_witir' => 'Sholat Lail/Witir',
+                                'sholat_dhuha' => 'Sholat Dhuha',
+                                'sholat_syuruq' => 'Sholat Syuruq'
+                            ],
+                            'Kebersihan dan Kerapian' => [
+                                'piket' => 'Piket',
+                                'merawat_pakaian' => 'Merawat Pakaian',
+                                'ranjang_dan_lemari' => 'Ranjang dan Lemari',
+                                'kerapian_pakaian' => 'Kerapian Pakaian'
+                            ],
+                            'Kedisiplinan' => [
+                                'kehadiran_disekolah' => 'Kehadiran di Sekolah',
+                                'kehadiran_dalam_taklim' => 'Kehadiran dalam Taklim',
+                                'kehadiran_dalam_ekstrakulikuler' => 'Kehadiran dalam Ekstrakurikuler'
+                            ],
+                            'Adab dan Akhlak' => [
+                                'ketika_di_masjid' => 'Ketika di Masjid',
+                                'makan_dan_minum' => 'Makan dan Minum',
+                                'ketika_belajar' => 'Ketika Belajar',
+                                'berinteraksi_dengan_ustadz' => 'Berinteraksi dengan Ustadz',
+                                'berinteraksi_dengan_seksama' => 'Berinteraksi dengan Sesama'
+                            ]
+                        ];
+
+                        $average = [];
+                        foreach ($data_groups as $group_name => $items) {
+                            echo "<tr><td colspan='3'><b>$group_name</b></td></tr>";
+                            foreach ($items as $key => $label) {
+                                $nilai = get_post_meta($post->ID, $key, true);
+                                echo "<tr><td>$label</td><td>$nilai</td><td>" . predikat($nilai) . "</td></tr>";
+                                $average[] = $nilai;
+                            }
+                        }
+
+                        $average_score = array_sum($average) / count($average);
+                        $average_score_formatted = number_format($average_score, 3); // Membatasi hingga 3 angka desimal
+                        echo "<tr><td><b>Rata - Rata</b></td><td><b>$average_score_formatted</b></td><td><b>" . predikat($average_score) . "</b></td></tr>";
+                        ?>
+                    </tbody>
+                </table>
+                <div style="margin-top: 10px;">
+                    <b>Catatan:</b>
+                    <div class="font-arab"><?php echo get_post_meta($post->ID, 'catatan', true); ?></div>
+                </div>
+                <div class="text-end">
+                    <span>Cawas, <?php echo date('d F Y'); ?></span><br>
+                    <span>Kepala Kesantrian</span>
+                </div>
             </div>
-            <div class="page_break"></div>
-        <?php endwhile;
-        wp_reset_postdata(); ?>
+            </div>
+            <?php if ($count < $total_posts) : // Cek apakah ini bukan post terakhir 
+            ?>
+                <div class="page_break"></div>
+            <?php endif; ?>
+        <?php endwhile; ?>
+        <?php wp_reset_postdata(); ?>
     <?php else : ?>
         <center>Maaf, tidak ditemukan data dengan ID Pendaftaran tersebut.</center>
     <?php endif; ?>
@@ -157,18 +235,13 @@ ob_start();
 <?php
 $html = ob_get_clean();
 
-
-
-// reference the Dompdf namespace
-// require_once VELOCITY_EXPEDISI_DIR_PATH('inc/lib/dompdf/vendor/autoload.php');
-// require_once(VELOCITY_EXPEDISI_DIR_PATH.'lib/dompdf/vendor/autoload.php');
 use Dompdf\Dompdf;
-// use Dompdf\Options;
+use Dompdf\Options;
 
-// $options = new Options();
-// $options->set('defaultFont', 'Helvetica');
-// $options->set('enable_remote', true);
-
+$options = new Options();
+$options->set('defaultFont', 'Amiri'); // Ubah ke font yang mendukung Arab
+$options->set('enable_remote', true); // Mengizinkan gambar dari URL
+$options->setIsHtml5ParserEnabled(true); // Enable HTML5 parser
 
 // instantiate and use the dompdf class
 $dompdf = new Dompdf($options);
@@ -176,11 +249,10 @@ $dompdf = new Dompdf($options);
 $dompdf->loadHtml($html);
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper('A4', 'potrait');
-// $dompdf->setPaper(array(0, 0, 300, 300), 'potrait');
+$dompdf->setPaper('A4', 'portrait');
 
 // Render the HTML as PDF
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream('kepribadian-' . $nis . '-' . rand(10000, 99999) . 'pdf', array('Attachment' => false));
+$dompdf->stream('kepribadian-' . $nis . '-' . rand(10000, 99999) . '.pdf', array('Attachment' => false));
