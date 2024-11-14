@@ -10,31 +10,33 @@
 defined('ABSPATH') || exit;
 
 // add post type keuangan
-add_action( 'init', 'register_custom_post_type_karakter' );
-function register_custom_post_type_karakter() {
-    register_post_type( 'karakter',
+add_action('init', 'register_custom_post_type_karakter');
+function register_custom_post_type_karakter()
+{
+    register_post_type(
+        'karakter',
         array(
             'labels' => array(
-                'name' => __( 'Karakter' ),
-                'singular_name' => __( 'Karakter' ),
-                'add_new' => __( 'Add New' ),
-                'add_new_item' => __( 'Add New Data Karakter' ),
-                'edit_item' => __( 'Edit Data Karakter' ),
-                'new_item' => __( 'New Data Karakter' ),
-                'view_item' => __( 'View Data Karakter' ),
-                'search_items' => __( 'Search Data Karakter' ),
-                'not_found' => __( 'No Data Karakter found' ),
-                'not_found_in_trash' => __( 'No Data Karakter found in Trash' ),
-                'parent_item_colon' => __( 'Parent Data Karakter' ),
-                'menu_name' => __( 'Karakter' ),
+                'name' => __('Karakter'),
+                'singular_name' => __('Karakter'),
+                'add_new' => __('Add New'),
+                'add_new_item' => __('Add New Data Karakter'),
+                'edit_item' => __('Edit Data Karakter'),
+                'new_item' => __('New Data Karakter'),
+                'view_item' => __('View Data Karakter'),
+                'search_items' => __('Search Data Karakter'),
+                'not_found' => __('No Data Karakter found'),
+                'not_found_in_trash' => __('No Data Karakter found in Trash'),
+                'parent_item_colon' => __('Parent Data Karakter'),
+                'menu_name' => __('Karakter'),
             ),
 
             'public' => false,
             'show_ui' => true,
             'has_archive' => false,
             'rewrite' => array('slug' => 'data-karakter'),
-            'supports' => array( 'title'),
-            'menu_icon' => SEKOLAHKU_URL .'asset/img/pray.png',
+            'supports' => array('title'),
+            'menu_icon' => SEKOLAHKU_URL . 'asset/img/pray.png',
             'capability_type' => 'post',
             'show_in_rest' => false,
             'rest_base' => 'data_karakter',
@@ -43,8 +45,9 @@ function register_custom_post_type_karakter() {
 }
 
 add_action('admin_menu', 'sekolahku_data_karakter_submenu_page');
-function sekolahku_data_karakter_submenu_page() {
-    add_submenu_page( 
+function sekolahku_data_karakter_submenu_page()
+{
+    add_submenu_page(
         'edit.php?post_type=data-karakter',
         'Import',
         'Import',
@@ -55,38 +58,41 @@ function sekolahku_data_karakter_submenu_page() {
 }
 
 // Add the custom columns to the form-ppdb post type:
-add_filter( 'manage_karakter_posts_columns', 'set_custom_karakter_ppdb_columns' );
-function set_custom_karakter_ppdb_columns($columns) {
-    unset( $columns['author'] );
-    unset( $columns['date'] );
-    $columns['siswa'] = __( 'Nama Lengkap', 'sekolahku' );
-    $columns['nis'] = __( 'NIS', 'sekolahku' );
-    $columns['kelas'] = __( 'Kelas', 'sekolahku' );
-    $columns['bulan'] = __( 'Bulan', 'sekolahku' );
+add_filter('manage_karakter_posts_columns', 'set_custom_karakter_ppdb_columns');
+function set_custom_karakter_ppdb_columns($columns)
+{
+    unset($columns['author']);
+    unset($columns['date']);
+    $columns['siswa'] = __('Nama Lengkap', 'sekolahku');
+    $columns['nis'] = __('NIS', 'sekolahku');
+    $columns['kelas'] = __('Kelas', 'sekolahku');
+    $columns['bulan'] = __('Bulan', 'sekolahku');
 
     return $columns;
 }
 
 // Add the data to the custom columns for the form-ppdb post type:
-add_action( 'manage_karakter_posts_custom_column' , 'custom_karakter_ppdb_column', 10, 2 );
-function custom_karakter_ppdb_column( $column, $post_id ) {
-    switch ( $column ) {
-        case 'siswa' :
-            $nama = get_post_meta( $post_id , 'siswa' , true);
+add_action('manage_karakter_posts_custom_column', 'custom_karakter_ppdb_column', 10, 2);
+function custom_karakter_ppdb_column($column, $post_id)
+{
+    switch ($column) {
+        case 'siswa':
+            $nama = get_post_meta($post_id, 'siswa', true);
             $nama = get_the_title($nama);
             echo $nama;
             break;
-        case 'nis' :
-            $nis = get_post_meta( $post_id , 'nis' , true);
+        case 'nis':
+            $nis = get_post_meta($post_id, 'nis', true);
             echo $nis;
             break;
-        case 'kelas' :
-            $kelas = get_post_meta( $post_id , 'kelas' , true);
+        case 'kelas':
+            $kelas = get_post_meta($post_id, 'kelas', true);
             echo $kelas . '<br>';
             break;
-        case 'bulan' :
-            $bulan_value = get_post_meta($post->ID, 'bulan', true); 
-            $tanggal = date_create($bulan_value); $bulan_tampilan = date_format($tanggal, 'F Y'); 
+        case 'bulan':
+            $bulan_value = get_post_meta($post->ID, 'bulan', true);
+            $tanggal = date_create($bulan_value);
+            $bulan_tampilan = date_format($tanggal, 'F Y');
             echo $bulan_tampilan;
             break;
     }
@@ -95,7 +101,8 @@ function custom_karakter_ppdb_column( $column, $post_id ) {
 
 
 // SHORTCODE KARAKTER
-function create_func_post_type_karakter() {
+function create_func_post_type_karakter()
+{
     ob_start();
     global $post;
     $nis = $_GET['nis'] ?? '';
@@ -110,7 +117,7 @@ function create_func_post_type_karakter() {
         ),
         'post_type' => 'karakter'
     ]);
-    ?>
+?>
     <div class="container">
         <div class="row formulir-input">
             <div class="col-md-6 offset-md-3">
@@ -141,68 +148,71 @@ function create_func_post_type_karakter() {
                     </a>
                 </div>
                 <div id="contentToPrint" class="print-me">
-                <style>
-                    .table td{
-                        font-size: 11px;
-                        border-top: 0 !important;
-                        padding: 5px;
-                    }
-                </style>
+                    <style>
+                        .table td {
+                            font-size: 11px;
+                            border-top: 0 !important;
+                            padding: 5px;
+                        }
+                    </style>
                     <div class="card w-100 mb-4 mt-3">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Nama 
-                            <b>
-                            <?php 
-                            $nama = get_post_meta( $post->ID , 'siswa' , true);
-                            $nama = get_the_title($nama);
-                            echo $nama; 
-                            ?>
-                            </b>
+                            <li class="list-group-item">Nama
+                                <b>
+                                    <?php
+                                    $nama = get_post_meta($post->ID, 'siswa', true);
+                                    $nama = get_the_title($nama);
+                                    echo $nama;
+                                    ?>
+                                </b>
                             </li>
                             <li class="list-group-item">Rombel Saat Ini <b><?php echo get_post_meta($post->ID, 'kelas', true); ?></b></li>
-                            <li class="list-group-item">Bulan <b><?php $bulan_value = get_post_meta($post->ID, 'bulan', true); $tanggal = date_create($bulan_value); $bulan_tampilan = date_format($tanggal, 'F Y'); echo $bulan_tampilan;?></b></li>
+                            <li class="list-group-item">Bulan <b><?php $bulan_value = get_post_meta($post->ID, 'bulan', true);
+                                                                    $tanggal = date_create($bulan_value);
+                                                                    $bulan_tampilan = date_format($tanggal, 'F Y');
+                                                                    echo $bulan_tampilan; ?></b></li>
                         </ul>
                     </div>
-                        <div class="mt-4">
+                    <div class="mt-4">
                         <table class="table">
                             <thead>
                                 <tr>
-                                <th scope="col">Kegiatan</th>
-                                <th scope="col">Nilai</th>
-                                <th scope="col">Keterangan</th>
+                                    <th scope="col">Kegiatan</th>
+                                    <th scope="col">Nilai</th>
+                                    <th scope="col">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                 $datas = [];
                                 $datas['Ibadah'] = [
                                     'sholat_fardu' => 'Sholat Fardu',
-                                    'sholat_rawatib' => 'Sholat Rowatib', 
-                                    'sholat_lail_witir' => 'Sholat Lail/Witir', 
-                                    'sholat_dhuha' => 'Sholat Dhuha', 
+                                    'sholat_rawatib' => 'Sholat Rowatib',
+                                    'sholat_lail_witir' => 'Sholat Lail/Witir',
+                                    'sholat_dhuha' => 'Sholat Dhuha',
                                     'sholat_syuruq' => 'Sholat Syuruq'
                                 ];
 
                                 $isians = [];
                                 $isians['Kebersihan dan Kerapian'] = [
                                     'piket' => 'Piket',
-                                    'merawat_pakaian' => 'Merawat Pakaian', 
-                                    'ranjang_dan_lemari' => 'Ranjang dan Lemari', 
+                                    'merawat_pakaian' => 'Merawat Pakaian',
+                                    'ranjang_dan_lemari' => 'Ranjang dan Lemari',
                                     'kerapian_pakaian' => 'Kerapian Pakaian'
                                 ];
 
                                 $diclipines = [];
                                 $diclipines['Kedisiplinan'] = [
                                     'kehadiran_disekolah' => 'Kehadiran Disekolah',
-                                    'kehadiran_dalam_taklim' => 'Kehadiran dalam Taklim', 
-                                    'kehadiran_dalam_ekstrakulikuler' => 'Kehadiran dalam Ekstrakulikuler', 
+                                    'kehadiran_dalam_taklim' => 'Kehadiran dalam Taklim',
+                                    'kehadiran_dalam_ekstrakulikuler' => 'Kehadiran dalam Ekstrakulikuler',
                                 ];
 
                                 $adabs = [];
                                 $adabs['Adab dan Akhlak'] = [
                                     'ketika_di_masjid' => 'Ketika di Masjid',
-                                    'makan_dan_minum' => 'Makan dan Minum', 
-                                    'ketika_belajar' => 'Ketika Belajar', 
+                                    'makan_dan_minum' => 'Makan dan Minum',
+                                    'ketika_belajar' => 'Ketika Belajar',
                                     'berinteraksi_dengan_ustadz' => 'Berinteraksi dengan Ustadz',
                                     'berinteraksi_dengan_seksama' => 'Berinteraksi dengan Seksama'
                                 ];
@@ -225,13 +235,13 @@ function create_func_post_type_karakter() {
                                         $rata_rata[] = $nilai;
                                     }
                                 }
-                                        $rata_rata_nilai = array_sum($rata_rata)/count($rata_rata);
-                                        $rata_rata_predikat = predikat($rata_rata_nilai);
-                                        echo '<tr class="bg-light">';
-                                        echo '<td class="ps-3"><b>Rata - Rata</b></td>';
-                                        echo '<td><b>' . $rata_rata_nilai . '</b></td>';
-                                        echo '<td><b>' . $rata_rata_predikat . '</b></td>';
-                                        echo '</tr>';
+                                $rata_rata_nilai = array_sum($rata_rata) / count($rata_rata);
+                                $rata_rata_predikat = predikat($rata_rata_nilai);
+                                echo '<tr class="bg-light">';
+                                echo '<td class="ps-3"><b>Rata - Rata</b></td>';
+                                echo '<td><b>' . $rata_rata_nilai . '</b></td>';
+                                echo '<td><b>' . $rata_rata_predikat . '</b></td>';
+                                echo '</tr>';
                                 ?>
                             </tbody>
                         </table>
@@ -251,7 +261,7 @@ function create_func_post_type_karakter() {
                         <br>
                     </div>
                 </div>
-                
+
             </div>
         <?php endwhile; ?>
         <!-- end of the loop -->
@@ -268,7 +278,65 @@ function create_func_post_type_karakter() {
 }
 add_shortcode('check_karakter', 'create_func_post_type_karakter');
 
-function predikat($nilai=100){
+
+// Form pencarian data karakter berdasarkan NIS dari form pencarian PPDB
+function wss_create_func_post_type_karakter()
+{
+    ob_start();
+    ?>
+    <div class="container">
+        <div class="row formulir-input">
+            <div class="col-md-6 offset-md-3">
+                <form id="status-check-form" method="post" class="mb-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="nis" name="nis" placeholder="Masukkan nomor induk siswa">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-primary" id="cek-status-btn">Cek Status</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+        <div id="status-result">
+            <!-- Hasil status cek akan muncul di sini -->
+            <span class="loading d-none"><i class="fa fa-spinner fa-spin"></i> Loading...</span>
+            <iframe id="nis-iframe" src="" width="100%" height="100%" frameborder="0" style="display:none; height: 100vh;"></iframe>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $('#cek-status-btn').on('click', function(e) {
+                e.preventDefault();
+
+                // Tampilkan elemen loading
+                $('.loading').removeClass('d-none');
+
+                var nis = $('#nis').val();
+                var iframeUrl = '<?php echo site_url("/kepribadian/"); ?>?nis=' + encodeURIComponent(nis);
+
+                // Set URL baru ke iframe dan tampilkan
+                $('#nis-iframe').attr('src', iframeUrl).show();
+
+                // Tambah event listener 'load' ke iframe
+                $('#nis-iframe').on('load', function() {
+                    // Sembunyikan elemen loading setelah iframe selesai dimuat
+                    $('.loading').addClass('d-none');
+                });
+            });
+        });
+    </script>
+<?php
+
+    return ob_get_clean();
+}
+add_shortcode('cek-raport', 'wss_create_func_post_type_karakter');
+
+
+function predikat($nilai = 100)
+{
     if ($nilai < 50) {
         return "Sangat Kurang";
     } elseif ($nilai > 50 && $nilai < 61) {
@@ -283,4 +351,3 @@ function predikat($nilai=100){
         return "Sangat Baik";
     }
 }
-

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Template Name: Resi Print
+ * Template Name: Raport Print
  *
  */
 
 $nis       = isset($_GET['nis']) ? $_GET['nis'] : '';
 // $download   = isset($_GET['download']) ? $_GET['download'] : 0;
 
-// if (empty($resi))
+// if (empty($raport))
 //     return false;
 
-// $args = array("post_type" => "data_resi", "s" => $resi);
+// $args = array("post_type" => "data_raport", "s" => $raport);
 // $query = get_posts($args);
 
 // if (empty($query))
@@ -30,7 +30,7 @@ ob_start();
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Resi</title>
+    <title>Raport</title>
     <style>
         .font-arab {
             font-family: 'Amiri', 'Arial', sans-serif;
@@ -135,13 +135,16 @@ ob_start();
                         <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
                             <tr>
                                 <td style="vertical-align: middle; text-align: left; width: 70px;">
-                                    <img src="https://www.sekolahsunnahalfalah.com/wp-content/uploads/2021/12/fav.png" alt="Logo Sekolah" style="width: 60px; height: auto;">
+                                    <img src="https://www.sekolahsunnahalfalah.com/wp-content/uploads/2024/11/Logo-PPTQ-AL-FALAH.png" alt="Logo Sekolah" style="width: 70px; height: auto;">
                                 </td>
                                 <td style="vertical-align: middle; text-align: center;">
-                                    <h2 style="margin: 0px; text-transform: uppercase;"><strong>Sekolah Sunnah Al Falah Klaten</strong></h2>
-                                    <span style="display: block;">Jl. Posis - Cawas Km. 7 Garingan, Tlingsing, Cawas, Klaten, Klaten, Jawa Tengah, Indonesia 57463</span>
-                                    <span style="display: block;">Website: www.sekolahsunnahalfalah.com | Fax/Telp: 02728851155</strong></span>
-                                    <span style="display: block;"><strong>NPSN KB 69985347 | NPSN TK 69968851 | NPSN SD 69786372 | NPSN SMP 69947987</span>
+                                    <h3 style="margin: 0px; text-transform: uppercase;"><strong>YAYASAN AL FALAH CAWAS BIDANG PENDIDIKAN</strong></h3>
+                                    <div style="margin: 0px 5px; ">
+                                        <h2 style="margin-top: 5px; margin-bottom: 5px; text-transform: uppercase; color: #008000;"><strong>PONDOK PESANTREN TAHFIDZ QUR'AN AL FALAH</strong></h2>
+                                    </div>
+                                    <span style="display: block; font-size: 12px;">Alamat : JL. Posis-Cawas Km 1 Girimarto, Tlingsing, Cawas, Klaten 57463 Telp. 0813 2773 5771</span>
+                                    <span style="display: block; font-size: 12px;">Email: pptqalfalahcawas@gmail.com | Website: www.sekolahsunnahalfalah.com</strong></span>
+                                    <!-- <span style="display: block;"><strong>NPSN KB 69985347 | NPSN TK 69968851 | NPSN SD 69786372 | NPSN SMP 69947987</span> -->
                                 </td>
                             </tr>
                         </table>
@@ -164,7 +167,7 @@ ob_start();
                             <th>Keterangan</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="font-size: 13px;">
                         <?php
                         $data_groups = [
                             'Ibadah' => [
@@ -210,13 +213,18 @@ ob_start();
                         ?>
                     </tbody>
                 </table>
-                <div style="margin-top: 10px;">
+                <div style="margin-top: 15px;">
                     <b>Catatan:</b>
                     <div class="font-arab"><?php echo get_post_meta($post->ID, 'catatan', true); ?></div>
                 </div>
-                <div class="text-end">
+                <div class="text-end" style="margin-top: 10px;">
                     <span>Cawas, <?php echo date('d F Y'); ?></span><br>
                     <span>Kepala Kesantrian</span>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <span style="display: block;"><b>( Aminuddin Nassrullah )</b></span>
                 </div>
             </div>
             </div>
